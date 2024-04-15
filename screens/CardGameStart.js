@@ -1,4 +1,4 @@
-import { MotiView } from "moti";
+import { MotiView } from "moti"; 
 import { Text, SafeAreaView } from "react-native";
 import { StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
