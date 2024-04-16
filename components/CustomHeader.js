@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    minHeight: "9%",
+    minHeight: "9%"
   },
 });
 

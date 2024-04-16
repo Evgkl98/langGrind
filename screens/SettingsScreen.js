@@ -20,7 +20,7 @@ export default function SettingsScreen({ navigation }) {
         ]}
       >
         <View style={styles.container}>
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, borderBottomWidth: 1, paddingBottom: 5 }}>
             <CustomHeader onBack={goBack} buttonColor="black" headerTitle="Settings"/>
           </View>
           <View style={styles.instructions}>
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   instructions: {
     flex: 11,
     flexDirection: "column",
-    paddingTop: 10,
+    paddingTop: 10
   },
   settingsBox: { flex: 10, flexDirection: "column", paddingTop: "5%" },
   cardSection: {
