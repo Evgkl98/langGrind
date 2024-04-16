@@ -1,5 +1,5 @@
 import { MotiView } from "moti"; 
-import { Text, SafeAreaView } from "react-native";
+import { Text, SafeAreaView, View } from "react-native";
 import { StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { MotiPressable } from "moti/interactions";
@@ -26,9 +26,9 @@ export default function CardGameStart({ navigation }) {
           { backgroundColor: styles.container.backgroundColor },
         ]}
       >
-        <MotiView style={styles.container}>
+        <View style={styles.container}>
           <CustomHeader onBack={goBack} buttonColor="black" />
-          <MotiView style={styles.instructions}>
+          <View style={styles.instructions}>
             <Text
               style={{
                 fontFamily: "Inter-Black",
@@ -68,8 +68,8 @@ export default function CardGameStart({ navigation }) {
                 color={styles.container.backgroundColor}
               />
             </MotiPressable>
-          </MotiView>
-        </MotiView>
+          </View>
+        </View>
       </SafeAreaView>
     </>
   );

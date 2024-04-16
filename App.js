@@ -1,5 +1,6 @@
 import StartScreen from "./screens/StartScreen";
 import ChooseExercise from "./screens/ChooseExercise";
+import SettingsScreen from "./screens/SettingsScreen";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -58,15 +59,14 @@ export default function App() {
                 animation: "default",
               }}
             />
-            {/* <Stack.Screen
-              name="CardContent"
-              component={CardContent}
+            <Stack.Screen
+              name="SettingsScreen"
+              component={SettingsScreen}
               options={{
                 gestureEnabled: true,
-                presentation: "modal",
                 animation: "default"
               }}
-            /> */}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

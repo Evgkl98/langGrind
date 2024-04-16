@@ -10,12 +10,18 @@ import {
 import { MotiPressable } from "moti/interactions";
 
 export default function ChooseExercise({ navigation }) {
+  
   function goToCards() {
     navigation.navigate("CardGameStart");
   }
+
   // function goBack() {
   //   navigation.navigate("StartScreen");
   // }
+
+  function goToSettings(){
+    navigation.navigate("SettingsScreen");
+  }
 
   return (
     <>
@@ -76,15 +82,16 @@ export default function ChooseExercise({ navigation }) {
             </MotiPressable>
 
             <MotiPressable
-              style={[styles.cubicSection, { opacity: 0.8 }]}
+              style={styles.cubicSection}
+              onPress={goToSettings}
               from={{ borderRadius: 8, scale: 1 }}
-              // animate={({ hovered, pressed }) => {
-              //   "worklet";
+              animate={({ hovered, pressed }) => {
+                "worklet";
 
-              //   return {
-              //     scale: hovered || pressed ? 0.8 : 1,
-              //   };
-              // }}
+                return {
+                  scale: hovered || pressed ? 0.8 : 1,
+                };
+              }}
             >
               <Text
                 style={{
