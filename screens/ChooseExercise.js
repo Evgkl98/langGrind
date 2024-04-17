@@ -2,6 +2,7 @@ import { Text, View, StyleSheet, StatusBar, SafeAreaView } from "react-native";
 
 // import CustomHeader from "../components/CustomHeader";
 import { MotiPressable } from "moti/interactions";
+import { MotiView } from "moti";
 
 export default function ChooseExercise({ navigation }) {
   function goToCards() {
@@ -32,11 +33,11 @@ export default function ChooseExercise({ navigation }) {
               onPress={goToCards}
               style={styles.cubicSection}
               from={{ borderRadius: 8, scale: 0 }}
-              animate={({ hovered, pressed }) => {
+              animate={({ pressed }) => {
                 "worklet";
 
                 return {
-                  scale: hovered || pressed ? 0.8 : 1,
+                  scale: pressed ? 0.8 : 1,
                 };
               }}
             >
@@ -50,17 +51,17 @@ export default function ChooseExercise({ navigation }) {
                 CardGame
               </Text>
             </MotiPressable>
+            <MotiView from={{ borderRadius: 8, scale: 0 }} animate={{scale: 1}} transition={{delay: 300}}>
             <MotiPressable
               style={[styles.cubicSection, { opacity: 0.8 }]}
-              from={{ borderRadius: 8, scale: 1 }}
-              // transition={{ delay: 500 }}
-              // animate={({ hovered, pressed }) => {
-              //   "worklet";
+              from={{ borderRadius: 8, scale: 0 }}
+              animate={({ pressed }) => {
+                "worklet";
 
-              //   return {
-              //     scale: hovered || pressed ? 0.8 : 1,
-              //   };
-              // }}
+                return {
+                  scale: pressed ? 0.8 : 1,
+                };
+              }}
             >
               <Text
                 style={{
@@ -83,29 +84,31 @@ export default function ChooseExercise({ navigation }) {
                 (Coming soon...)
               </Text>
             </MotiPressable>
+            </MotiView>
+            <MotiView from={{ borderRadius: 8, scale: 0 }} animate={{scale: 1}} transition={{delay: 600}}>
+              <MotiPressable
+                style={styles.cubicSection}
+                onPress={goToSettings}
+                
+                animate={({ pressed }) => {
+                  "worklet";
 
-            <MotiPressable
-              style={styles.cubicSection}
-              onPress={goToSettings}
-              from={{ borderRadius: 8, scale: 1 }}
-              animate={({ hovered, pressed }) => {
-                "worklet";
-
-                return {
-                  scale: hovered || pressed ? 0.8 : 1,
-                };
-              }}
-            >
-              <Text
-                style={{
-                  fontFamily: "Inter-Black",
-                  fontSize: 25,
-                  color: "black",
+                  return {
+                    scale: pressed ? 0.8 : 1,
+                  };
                 }}
               >
-                Settings
-              </Text>
-            </MotiPressable>
+                <Text
+                  style={{
+                    fontFamily: "Inter-Black",
+                    fontSize: 25,
+                    color: "black",
+                  }}
+                >
+                  Settings
+                </Text>
+              </MotiPressable>
+            </MotiView>
           </View>
         </View>
       </SafeAreaView>

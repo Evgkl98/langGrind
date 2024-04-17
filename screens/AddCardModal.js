@@ -16,6 +16,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Platform } from "react-native";
+import { useSelector } from "react-redux";
 
 function AddCardModal({ navigation, onSubmit, route }) {
   const savedWord = route.params?.cardWord;
@@ -24,6 +25,10 @@ function AddCardModal({ navigation, onSubmit, route }) {
   const isEditing = route.params?.isEditing;
   const isPlaying = route.params?.isPlaying;
   const isAdding = route.params?.isAdding;
+
+  const words = useSelector((state) => state.cardReducer);
+
+  console.log(words);
 
   const [isDisabled, setIsDisabled] = useState(false);
 
@@ -49,6 +54,14 @@ function AddCardModal({ navigation, onSubmit, route }) {
     wordInputIsValid: true,
     translationInputIsValid: true,
   });
+
+  const upperCaseWord = word.charAt(0).toUpperCase() + word.slice(1);
+  const lowerCaseWord = word.charAt(0).toLowerCase() + word.slice(1);
+
+  const upperCaseTranslation =
+    translation.charAt(0).toUpperCase() + translation.slice(1);
+  const lowerCaseTranslation =
+    translation.charAt(0).toLowerCase() + translation.slice(1);
 
   const wordLabel = () => {
     if (isEditing) {
@@ -120,13 +133,9 @@ function AddCardModal({ navigation, onSubmit, route }) {
       );
       onCancel();
     } else if (isPlaying) {
-      const upperCaseWord =
-        translation.charAt(0).toUpperCase() + translation.slice(1);
-      const lowerCaseWord =
-        translation.charAt(0).toLowerCase() + translation.slice(1);
       if (
-        upperCaseWord === savedtranslation ||
-        lowerCaseWord === savedtranslation
+        upperCaseTranslation === savedtranslation ||
+        lowerCaseTranslation === savedtranslation
       ) {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         setIsCorrect("correct");
@@ -141,14 +150,24 @@ function AddCardModal({ navigation, onSubmit, route }) {
         dispatch(changeCardStatus({ cardId: savedId, cardStatus: "wrong" }));
       }
     } else if (isAdding && word && translation) {
-      const cardId = Math.random().toString();
-      dispatch(addCard({ cardId, word, translation }));
+      const checkIfExists = words.findIndex(
+        (element) =>
+          (element.translation === upperCaseTranslation || element.translation ===
+            lowerCaseTranslation) &&
+          (element.word === upperCaseWord || element.word === lowerCaseWord)
+      );
+      if (checkIfExists > -1) {
+        return Alert.alert("Card already exists", "Try to add another card");
+      } else {
+        const cardId = Math.random().toString();
+        dispatch(addCard({ cardId, word, translation }));
 
-      console.log("New card:", { cardId, word, translation });
+        console.log("New card:", { cardId, word, translation });
 
-      setWord(""), setTranslation("");
+        setWord(""), setTranslation("");
 
-      onCancel();
+        onCancel();
+      }
     }
   }
 

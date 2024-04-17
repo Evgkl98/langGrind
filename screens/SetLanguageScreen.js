@@ -1,8 +1,15 @@
-import { FlatList, SafeAreaView, StyleSheet, View, Text } from "react-native";
+import {
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  Alert,
+} from "react-native";
 import { useDispatch } from "react-redux";
 import CustomHeader from "../components/CustomHeader";
+import { changeAppLanguage } from "../store/languageSlice";
 import { useSelector } from "react-redux";
-import { removeCard } from "../store/myVocab";
 import Card from "../components/Card";
 import {
   SlideOutLeft,
@@ -16,6 +23,12 @@ import { MotiPressable } from "moti/interactions";
 
 export default function SetLanguageScreen({ navigation }) {
   const appLanguages = APP_LANGUAGES;
+
+  const languageIs = useSelector((state) => state.languageReducer);
+
+  console.log(languageIs);
+
+  const dispatch = useDispatch();
 
   const windowWidth = Dimensions.get("window").width;
 
@@ -42,6 +55,17 @@ export default function SetLanguageScreen({ navigation }) {
                     return {
                       scale: pressed ? 0.85 : 1,
                     };
+                  }}
+                  onPress={() => {
+                    setTimeout(() => {
+                      Alert.alert(
+                        "Notification",
+                        `You've successfully changed the app language to ${itemData.item.language}`
+                      );
+                    }, 400);
+                    setTimeout(() => {
+                      dispatch(changeAppLanguage(itemData.item.language));
+                    }, 800);
                   }}
                 >
                   <Text
