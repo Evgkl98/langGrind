@@ -2,12 +2,17 @@ import { Text, SafeAreaView, View } from "react-native";
 import { StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { MotiPressable } from "moti/interactions";
-import { FontAwesome5 } from "@expo/vector-icons";
 import CustomHeader from "../components/CustomHeader";
 
+
 export default function SettingsScreen({ navigation }) {
+
+
   function goBack() {
     navigation.navigate("ChooseExercise");
+  }
+  function setAppLanguage(){
+    navigation.navigate("SetLanguageScreen")
   }
 
   return (
@@ -28,7 +33,7 @@ export default function SettingsScreen({ navigation }) {
               <Text
                 style={{
                   fontFamily: "Inter-Light",
-                  fontSize: 25,
+                  fontSize: 23,
                   color: "black",
                   paddingHorizontal: 20,
                   paddingVertical: 10,
@@ -38,6 +43,7 @@ export default function SettingsScreen({ navigation }) {
                 Preferences
               </Text>
               <MotiPressable
+                onPress={setAppLanguage}
                 style={styles.cardSection}
                 from={{ scale: 1 }}
                 animate={({ pressed }) => {
@@ -61,7 +67,7 @@ export default function SettingsScreen({ navigation }) {
               <Text
                 style={{
                   fontFamily: "Inter-Light",
-                  fontSize: 25,
+                  fontSize: 23,
                   color: "black",
                   paddingHorizontal: 20,
                   paddingVertical: 10,
@@ -133,9 +139,9 @@ const styles = StyleSheet.create({
   cardSection: {
     backgroundColor: "#0000FF",
     borderRadius: 20,
-    marginVertical: 10,
-    padding: 15,
-    marginHorizontal: 15,
     width: "90%",
+    alignSelf: "center",
+    padding: 15,
+    margin: 10
   },
 });

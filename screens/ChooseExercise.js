@@ -1,16 +1,9 @@
-import {
-  Text,
-  View,
-  StyleSheet,
-  StatusBar,
-  SafeAreaView,
-} from "react-native";
+import { Text, View, StyleSheet, StatusBar, SafeAreaView } from "react-native";
 
 // import CustomHeader from "../components/CustomHeader";
 import { MotiPressable } from "moti/interactions";
 
 export default function ChooseExercise({ navigation }) {
-  
   function goToCards() {
     navigation.navigate("CardGameStart");
   }
@@ -19,7 +12,7 @@ export default function ChooseExercise({ navigation }) {
   //   navigation.navigate("StartScreen");
   // }
 
-  function goToSettings(){
+  function goToSettings() {
     navigation.navigate("SettingsScreen");
   }
 
@@ -77,7 +70,17 @@ export default function ChooseExercise({ navigation }) {
                   textAlign: "center",
                 }}
               >
-                Translator 
+                Translator
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "Inter-Light",
+                  fontSize: 15,
+                  top: 5,
+                  textDecorationLine: "underline",
+                }}
+              >
+                (Coming soon...)
               </Text>
             </MotiPressable>
 

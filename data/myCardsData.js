@@ -1,4 +1,0 @@
-
-// testing
-
-export const CARDS = []

@@ -2,6 +2,7 @@ import { View, Text } from "react-native";
 import { StyleSheet } from "react-native";
 import BackButton from "./BackButton";
 import AddButton from "./AddButton";
+import { Dimensions } from "react-native";
 
 function CustomHeader({
   onBack,
@@ -10,7 +11,8 @@ function CustomHeader({
   twoButtons,
   headerTitle,
 }) {
-
+  const windowWidth = Dimensions.get("window").width;
+  console.log(windowWidth);
   return (
     <View
       style={[
@@ -20,17 +22,17 @@ function CustomHeader({
     >
       <BackButton onPress={onBack} backButtonColor={buttonColor} />
       {headerTitle && (
-        <Text
-          style={{
-            fontSize: 23,
-            fontFamily: "Inter-Light",
-            textDecorationLine: "underline",
-            marginLeft: "15%",
-            textAlign: "center"
-          }}
-        >
-          {headerTitle}
-        </Text>
+        <View style={[styles.headerBox, { width: windowWidth }]}>
+          <Text
+            style={{
+              fontSize: 23,
+              fontFamily: "Inter-Light",
+              textDecorationLine: "underline",
+            }}
+          >
+            {headerTitle}
+          </Text>
+        </View>
       )}
       {twoButtons && <AddButton onPress={onAddCard} withoutBorder={true} />}
     </View>
@@ -43,7 +45,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    minHeight: "9%"
+    minHeight: "9%",
+  },
+  headerBox: {
+    position: "absolute",
+    flexDirection: "row",
+    justifyContent: "center",
+    zIndex: -1,
   },
 });
 

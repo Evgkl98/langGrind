@@ -52,14 +52,7 @@ export default function StartScreen({ navigation }) {
       </MotiText>
       <MotiPressable
         onPress={handleScale}
-        from={{ opacity: 0.7}}
-        animate={{ opacity: 1}}
-        transition={{
-          opacity: {
-            loop: true,
-            duration: 1000,
-          },
-        }}
+        
       >
         <MotiView
           style={styles.cubic}
