@@ -1,15 +1,13 @@
 import { StyleSheet, Text, Pressable, View } from "react-native";
-
 import Swipeable from "react-native-gesture-handler/Swipeable";
-
 import { useNavigation } from "@react-navigation/native";
-import Animated, { SlideInDown } from "react-native-reanimated";
-import { SlideOutLeft, FadeIn } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
+import { FadeIn } from "react-native-reanimated";
 import { LinearTransition } from "react-native-reanimated";
-import { MotiPressable } from "moti/interactions";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Entypo } from '@expo/vector-icons';
+
+import landAppLogic from "../data/langAppLogic";
 
 export default function Card({
   children,
@@ -19,6 +17,8 @@ export default function Card({
   onDelete,
   cardStatus,
 }) {
+
+  const {buttons} = landAppLogic();
   const navigation = useNavigation();
 
   console.log(cardStatus);
@@ -51,7 +51,7 @@ export default function Card({
             color: "red",
           }}
         >
-          Delete
+          {buttons.deleteButton}
         </Text>
       </Pressable>
     );
@@ -70,7 +70,7 @@ export default function Card({
             color: "black", //"#007AFF" ??
           }}
         >
-          Edit
+          {buttons.editButton}
         </Text>
       </Pressable>
     );
@@ -84,35 +84,29 @@ export default function Card({
         overshootLeft={false}
         overshootRight={false}
       >
-        <Pressable
-          onPress={playGame}
-        >
+        <Pressable onPress={playGame}>
           <View style={styles.cardItem}>
-            <View style={{width: "87%"}}>
-            <Text
-              style={{
-                fontFamily: "Inter-Light",
-                fontSize: 23,
-                margin: 19,
-                color: "#ffd700",
-                textAlign: "left"
-              }}
-            >
-              {children}
+            <View style={{ width: "87%" }}>
+              <Text
+                style={{
+                  fontFamily: "Inter-Light",
+                  fontSize: 23,
+                  margin: 19,
+                  color: "#ffd700",
+                  textAlign: "left",
+                }}
+              >
+                {children}
               </Text>
-              </View>
-              <View style={{width: "13%"}}>
+            </View>
+            <View style={{ width: "13%" }}>
               {cardStatus === "correct" && (
-                <FontAwesome
-                  name="check-circle"
-                  size={30}
-                  color="#4CBB17"
-                />
+                <FontAwesome name="check-circle" size={30} color="#4CBB17" />
               )}
               {cardStatus === "wrong" && (
-                <MaterialIcons name="cancel" size={30} color="red"/>
+                <MaterialIcons name="cancel" size={30} color="red" />
               )}
-              </View>
+            </View>
           </View>
         </Pressable>
       </Swipeable>
@@ -129,13 +123,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   },
   box: {
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   pressed: {
-    opacity: 0.5
-  }
+    opacity: 0.5,
+  },
 });

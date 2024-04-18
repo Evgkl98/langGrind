@@ -1,8 +1,9 @@
 import { Text, Pressable, StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import landAppLogic from "../data/langAppLogic";
 
 export default function AddButton({ onPress, withoutBorder }) {
-
+  const {buttons} = landAppLogic()
   return (
     <Pressable
       onPress={onPress}
@@ -17,7 +18,7 @@ export default function AddButton({ onPress, withoutBorder }) {
             color: "black",
           }}
         >
-          Add Card
+          {buttons.addButton}
         </Text>
       </View>
     </Pressable>

@@ -5,9 +5,13 @@ import { StatusBar } from "expo-status-bar";
 import { MotiPressable } from "moti/interactions";
 import { FontAwesome5 } from "@expo/vector-icons";
 import CustomHeader from "../components/CustomHeader";
+import landAppLogic from "../data/langAppLogic";
 
 
 export default function CardGameStart({ navigation }) {
+
+  const {gameStartText} = landAppLogic()
+
   function goBack() {
     navigation.navigate("ChooseExercise");
   }
@@ -37,7 +41,7 @@ export default function CardGameStart({ navigation }) {
                 bottom: "15%",
               }}
             >
-              Instructions
+              {gameStartText.title}
             </Text>
             <Text
               style={{
@@ -49,7 +53,7 @@ export default function CardGameStart({ navigation }) {
                 paddingHorizontal: 20
               }}
             >
-              Tap on a card and translate the word on it
+              {gameStartText.subtitle}
             </Text>
             <MotiPressable
               style={styles.playButton}

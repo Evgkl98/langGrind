@@ -11,9 +11,12 @@ import {
   LinearTransition,
 } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
+import landAppLogic from "../data/langAppLogic";
+
 
 
 function CardGame({ navigation }) {
+  const {gameText} = landAppLogic()
   const words = useSelector((state) => state.cardReducer);
 
   function goBack() {
@@ -50,9 +53,9 @@ function CardGame({ navigation }) {
           >
             {words.length === 0 ? (
               <Animated.Text
-                style={{ fontFamily: "Inter-Light", fontSize: 30, margin: 40 }}
+                style={{ fontFamily: "Inter-Light", fontSize: 30, margin: 40, textAlign: "center" }}
               >
-                No cards found
+                {gameText.noCards}
               </Animated.Text>
             ) : (
               <Animated.FlatList

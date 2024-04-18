@@ -3,16 +3,16 @@ import { StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { MotiPressable } from "moti/interactions";
 import CustomHeader from "../components/CustomHeader";
-
+import landAppLogic from "../data/langAppLogic";
 
 export default function SettingsScreen({ navigation }) {
-
+  const { settingsText } = landAppLogic();
 
   function goBack() {
     navigation.navigate("ChooseExercise");
   }
-  function setAppLanguage(){
-    navigation.navigate("SetLanguageScreen")
+  function setAppLanguage() {
+    navigation.navigate("SetLanguageScreen");
   }
 
   return (
@@ -26,7 +26,11 @@ export default function SettingsScreen({ navigation }) {
       >
         <View style={styles.container}>
           <View style={{ flex: 1, borderBottomWidth: 1, paddingBottom: 5 }}>
-            <CustomHeader onBack={goBack} buttonColor="black" headerTitle="Settings"/>
+            <CustomHeader
+              onBack={goBack}
+              buttonColor="black"
+              headerTitle={settingsText.settingsTitle}
+            />
           </View>
           <View style={styles.instructions}>
             <View style={styles.settingsBox}>
@@ -37,10 +41,10 @@ export default function SettingsScreen({ navigation }) {
                   color: "black",
                   paddingHorizontal: 20,
                   paddingVertical: 10,
-                  textDecorationLine: "underline"
+                  // textDecorationLine: "underline"
                 }}
               >
-                Preferences
+                {settingsText.preferencesTitle}
               </Text>
               <MotiPressable
                 onPress={setAppLanguage}
@@ -60,7 +64,7 @@ export default function SettingsScreen({ navigation }) {
                     color: "#ffd700",
                   }}
                 >
-                  Language
+                  {settingsText.languageSection}
                 </Text>
               </MotiPressable>
 
@@ -71,10 +75,10 @@ export default function SettingsScreen({ navigation }) {
                   color: "black",
                   paddingHorizontal: 20,
                   paddingVertical: 10,
-                  textDecorationLine: "underline"
+                  // textDecorationLine: "underline"
                 }}
               >
-                Help
+                {settingsText.helpTitle}
               </Text>
               <MotiPressable
                 style={styles.cardSection}
@@ -93,7 +97,7 @@ export default function SettingsScreen({ navigation }) {
                     color: "#ffd700",
                   }}
                 >
-                  About
+                  {settingsText.aboutSection}
                 </Text>
               </MotiPressable>
               <MotiPressable
@@ -113,7 +117,7 @@ export default function SettingsScreen({ navigation }) {
                     color: "#ffd700",
                   }}
                 >
-                  Feedback
+                  {settingsText.feedbackSection}
                 </Text>
               </MotiPressable>
             </View>
@@ -133,7 +137,7 @@ const styles = StyleSheet.create({
   instructions: {
     flex: 11,
     flexDirection: "column",
-    paddingTop: 10
+    paddingTop: 10,
   },
   settingsBox: { flex: 10, flexDirection: "column", paddingTop: "5%" },
   cardSection: {
@@ -142,6 +146,6 @@ const styles = StyleSheet.create({
     width: "90%",
     alignSelf: "center",
     padding: 15,
-    margin: 10
+    margin: 10,
   },
 });

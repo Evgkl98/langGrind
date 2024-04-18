@@ -10,21 +10,34 @@ import { useDispatch } from "react-redux";
 import CustomHeader from "../components/CustomHeader";
 import { changeAppLanguage } from "../store/languageSlice";
 import { useSelector } from "react-redux";
-import Card from "../components/Card";
-import {
-  SlideOutLeft,
-  FadeIn,
-  LinearTransition,
-} from "react-native-reanimated";
-import Animated from "react-native-reanimated";
-import { APP_LANGUAGES } from "../data/AppLanguages";
+
 import { Dimensions } from "react-native";
 import { MotiPressable } from "moti/interactions";
+import landAppLogic from "../data/langAppLogic";
+
 
 export default function SetLanguageScreen({ navigation }) {
-  const appLanguages = APP_LANGUAGES;
-
   const languageIs = useSelector((state) => state.languageReducer);
+
+  const { languagesText, alerts } = landAppLogic();
+
+  //Use async and await:
+
+
+
+  function changeLanguage (lang) {
+    setTimeout(() => dispatch(changeAppLanguage(lang)), 400);
+  } 
+
+
+
+
+  const appLanguages = [
+    { id: "1", language: "English" },
+    { id: "2", language: "Deutsch" },
+    { id: "3", language: "Russian" },
+    { id: "4", language: "Czech" },
+  ];
 
   console.log(languageIs);
 
@@ -40,7 +53,10 @@ export default function SetLanguageScreen({ navigation }) {
     <>
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
-          <CustomHeader onBack={goBack} headerTitle={"Language"} />
+          <CustomHeader
+            onBack={goBack}
+            headerTitle={languagesText.languageTitle}
+          />
           <View style={[styles.playground]}>
             <FlatList
               data={appLanguages}
@@ -56,17 +72,13 @@ export default function SetLanguageScreen({ navigation }) {
                       scale: pressed ? 0.85 : 1,
                     };
                   }}
-                  onPress={() => {
-                    setTimeout(() => {
-                      Alert.alert(
-                        "Notification",
-                        `You've successfully changed the app language to ${itemData.item.language}`
-                      );
-                    }, 400);
-                    setTimeout(() => {
-                      dispatch(changeAppLanguage(itemData.item.language));
-                    }, 800);
-                  }}
+                  // onPress={() => {
+                  //   setTimeout(() => {
+                  //     dispatch(changeAppLanguage(itemData.item.language));
+                  //   }, 400);
+                  //   setTimeout(changeAlert, 1000); //schedules with rendering
+                  // }}
+                  onPress={() => changeLanguage(itemData.item.language)}
                 >
                   <Text
                     style={{

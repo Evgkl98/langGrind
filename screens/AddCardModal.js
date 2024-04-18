@@ -17,8 +17,11 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Platform } from "react-native";
 import { useSelector } from "react-redux";
+import landAppLogic from "../data/langAppLogic";
 
 function AddCardModal({ navigation, onSubmit, route }) {
+  const { modalText, buttons, alerts } = landAppLogic();
+
   const savedWord = route.params?.cardWord;
   const savedtranslation = route.params?.cardTranslation;
   const savedId = route.params?.cardId;
@@ -65,11 +68,11 @@ function AddCardModal({ navigation, onSubmit, route }) {
 
   const wordLabel = () => {
     if (isEditing) {
-      return "Edit card";
+      return `${modalText.editCard}`;
     } else if (isPlaying) {
-      return "Translate the word";
+      return `${modalText.playCard}`;
     } else {
-      return "New card";
+      return `${modalText.newCard}`;
     }
   };
 
@@ -80,23 +83,23 @@ function AddCardModal({ navigation, onSubmit, route }) {
   const validateInputs = () => {
     if (!word && !translation) {
       Alert.alert(
-        "Empty input fields",
-        "Please write your word and its translation"
+        alerts.noTextAndTranslation,
+        alerts.noTextAndTranslation2,
       );
       setInputsValidation({
         wordInputIsValid: false,
         translationInputIsValid: false,
       });
     } else if (!word) {
-      Alert.alert("Empty input field", "Please write your word");
+      Alert.alert(alerts.noWord, alerts.noWord2);
       setInputsValidation((prevInputs) => ({
         ...prevInputs,
         wordInputIsValid: false,
       }));
     } else if (!translation) {
       Alert.alert(
-        "Empty input field",
-        "Please write a translation for the word"
+        alerts.noTranslation,
+        alerts.noTranslation2
       );
       setInputsValidation((prevInputs) => ({
         ...prevInputs,
@@ -145,19 +148,19 @@ function AddCardModal({ navigation, onSubmit, route }) {
       } else if (translation === "") {
         return;
       } else {
-        Alert.alert("Wrong translation", "Oops... Try once again!");
+        Alert.alert(alerts.wrongAnswer, alerts.wrongAnswer2);
         setIsCorrect("wrong");
         dispatch(changeCardStatus({ cardId: savedId, cardStatus: "wrong" }));
       }
     } else if (isAdding && word && translation) {
       const checkIfExists = words.findIndex(
         (element) =>
-          (element.translation === upperCaseTranslation || element.translation ===
-            lowerCaseTranslation) &&
+          (element.translation === upperCaseTranslation ||
+            element.translation === lowerCaseTranslation) &&
           (element.word === upperCaseWord || element.word === lowerCaseWord)
       );
       if (checkIfExists > -1) {
-        return Alert.alert("Card already exists", "Try to add another card");
+        return Alert.alert(alerts.cardExists, alerts.cardExists2);
       } else {
         const cardId = Math.random().toString();
         dispatch(addCard({ cardId, word, translation }));
@@ -283,7 +286,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
             ]}
             autoCorrect={false}
             keyboardType="default"
-            placeholder={isPlaying ? word : "Word"}
+            placeholder={isPlaying ? word : `${modalText.wordPlaceholder}`}
             readOnly={isPlaying ? true : false}
             selectTextOnFocus={isPlaying ? false : true}
             onChangeText={(text) => {
@@ -307,7 +310,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
                 backgroundColor: "#B0E2B0",
               },
             ]}
-            placeholder="Translation"
+            placeholder={modalText.translationPlaceholder}
             readOnly={isCorrect === "correct" ? true : false}
             autoCorrect={false}
             keyboardType="default"
@@ -328,14 +331,18 @@ function AddCardModal({ navigation, onSubmit, route }) {
               }}
             >
               <Button
-                title="Cancel"
+                title={buttons.cancelButton}
                 color="black"
                 disabled={isCorrect === "correct" ? true : false}
                 onPress={onCancel}
               ></Button>
 
               <Button
-                title={isEditing ? "Edit" : "Confirm"}
+                title={
+                  isEditing
+                    ? `${buttons.editButton}`
+                    : `${buttons.confirmButton}`
+                }
                 disabled={isCorrect === "correct" ? true : false}
                 onPress={onSubmit}
               ></Button>
