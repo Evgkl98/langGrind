@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import BackButton from "./BackButton";
 import AddButton from "./AddButton";
 import { Dimensions } from "react-native";
+import { Platform } from "react-native";
 
 function CustomHeader({
   onBack,
@@ -18,6 +19,7 @@ function CustomHeader({
       style={[
         styles.container,
         twoButtons && { justifyContent: "space-between" },
+        Platform.OS === "android" && {paddingTop: 10}
       ]}
     >
       <BackButton onPress={onBack} backButtonColor={buttonColor} />
@@ -26,7 +28,7 @@ function CustomHeader({
           <Text
             style={{
               fontSize: 20,
-              fontFamily: "Inter-Light",
+              fontFamily: "Inter-Regular",
               textDecorationLine: "underline",
             }}
           >
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    minHeight: "9%",
+    minHeight: "9%"
   },
   headerBox: {
     position: "absolute",

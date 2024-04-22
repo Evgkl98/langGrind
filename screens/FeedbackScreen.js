@@ -9,7 +9,7 @@ import { EvilIcons } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
 import { Dimensions } from "react-native";
 import { MotiPressable } from "moti/interactions";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function FeedbackScreen({ navigation }) {
   const { settingsText } = landAppLogic();
@@ -29,13 +29,13 @@ export default function FeedbackScreen({ navigation }) {
         ]}
       >
         <View style={styles.container}>
-          {/* <View style={{ flex: 1, paddingBottom: 5 }}>
+          <View style={{ flex: 1, paddingBottom: 5 }}>
             <CustomHeader
               onBack={goBack}
               buttonColor="black"
-              //   headerTitle={settingsText.aboutSection}
+              // headerTitle="Give Feedback"
             />
-          </View> */}
+          </View>
 
           <View style={styles.content}>
             <View
@@ -43,12 +43,16 @@ export default function FeedbackScreen({ navigation }) {
                 flex: 1,
                 width: windowWidth * 0.85,
                 flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
+                justifyContent: "space-evenly",
+                alignItems: "center"
               }}
             >
               <Text style={{ fontFamily: "Inter-Black", fontSize: 30 }}>
                 Tell me something {":)"}
+              </Text>
+              <Text style={{ fontFamily: "Inter-Light", fontSize: 15, textAlign: "center" }}>
+                Here you can freely write about bugs, improvements and your
+                ideas.
               </Text>
             </View>
             <View
@@ -57,10 +61,14 @@ export default function FeedbackScreen({ navigation }) {
                 flexDirection: "column",
                 justifyContent: "space-around",
                 alignItems: "center",
-                paddingBottom: 25
+                paddingBottom: 25,
               }}
             >
-                <MaterialCommunityIcons name="email-edit-outline" size={100} color="black"/>
+              <MaterialCommunityIcons
+                name="email-edit-outline"
+                size={100}
+                color="black"
+              />
               <TextInput
                 multiline
                 textAlignVertical="top"
@@ -70,7 +78,7 @@ export default function FeedbackScreen({ navigation }) {
                   fontSize: 15,
                   borderWidth: 1,
                   width: windowWidth * 0.85,
-                  height: "40%",
+                  height: "50%",
                   borderRadius: 10,
                   paddingHorizontal: 10,
                   paddingTop: 10,
@@ -90,7 +98,7 @@ export default function FeedbackScreen({ navigation }) {
               >
                 <Text
                   style={{
-                    fontFamily: "Inter-Light",
+                    fontFamily: "Inter-Regular",
                     fontSize: 23,
                     color: "#ffd700",
                     textAlign: "center",

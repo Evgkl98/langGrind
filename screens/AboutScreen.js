@@ -8,6 +8,7 @@ import landAppLogic from "../data/langAppLogic";
 import { EvilIcons } from "@expo/vector-icons";
 import * as WebBrowser from 'expo-web-browser';
 
+
 export default function AboutScreen({ navigation }) {
   const { settingsText } = landAppLogic();
 

@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
       buttonTitle: {
         color: "#ffd700",
         fontSize: 20,
-        fontFamily: "Inter-Light",
+        fontFamily: "Inter-Regular",
       },
       pressed: {
         opacity: 0.3
