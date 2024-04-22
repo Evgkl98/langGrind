@@ -8,7 +8,7 @@ export default function landAppLogic() {
       sectionsText: {
         firstSection: "Cards",
         secondSection: "Translator",
-        secondSectionSoon: "Coming soon...",
+        secondSectionSoon: "Coming soon...", // written under the second section
         thirdSection: "Settings",
       },
       gameStartText: {
@@ -40,6 +40,9 @@ export default function landAppLogic() {
         languageSection: "Language",
         aboutSection: "About",
         feedbackSection: "Feedback",
+      },
+      aboutText: {
+
       },
       languagesText: {
         languageTitle: "Language"
@@ -99,6 +102,9 @@ export default function landAppLogic() {
         languageSection: "Язык приложения",
         aboutSection: "О приложении",
         feedbackSection: "Обратная связь",
+      },
+      aboutText: {
+
       },
       languagesText: {
         languageTitle: "Язык"

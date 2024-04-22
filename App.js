@@ -12,6 +12,8 @@ import { store } from "./store/store";
 import CardContent from "./screens/CardContent";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import SetLanguageScreen from "./screens/SetLanguageScreen";
+import AboutScreen from "./screens/AboutScreen";
+import FeedbackScreen from "./screens/FeedbackScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -71,6 +73,23 @@ export default function App() {
                 component={SetLanguageScreen}
                 options={{
                   gestureEnabled: false,
+                  animation: "default",
+                }}
+              />
+              <Stack.Screen
+                name="AboutScreen"
+                component={AboutScreen}
+                options={{
+                  gestureEnabled: false,
+                  animation: "default",
+                }}
+              />
+              <Stack.Screen
+                name="FeedbackScreen"
+                component={FeedbackScreen}
+                options={{
+                  gestureEnabled: true,
+                  presentation: "modal",
                   animation: "default",
                 }}
               />

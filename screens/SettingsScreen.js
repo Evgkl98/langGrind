@@ -14,6 +14,12 @@ export default function SettingsScreen({ navigation }) {
   function setAppLanguage() {
     navigation.navigate("SetLanguageScreen");
   }
+  function aboutGame(){
+    navigation.navigate("AboutScreen")
+  }
+  function feedback(){
+    navigation.navigate("FeedbackScreen")
+  }
 
   return (
     <>
@@ -81,6 +87,7 @@ export default function SettingsScreen({ navigation }) {
                 {settingsText.helpTitle}
               </Text>
               <MotiPressable
+                onPress={aboutGame}
                 style={styles.cardSection}
                 from={{ scale: 1 }}
                 animate={({ pressed }) => {
@@ -101,6 +108,7 @@ export default function SettingsScreen({ navigation }) {
                 </Text>
               </MotiPressable>
               <MotiPressable
+              onPress={feedback}
                 style={styles.cardSection}
                 from={{ scale: 1 }}
                 animate={({ pressed }) => {
