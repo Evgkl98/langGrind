@@ -49,6 +49,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
   const [translation, setTranslation] = useState(translationLabel());
   const [isCorrect, setIsCorrect] = useState("default");
 
+
   const dispatch = useDispatch();
 
   //Validation part:
@@ -79,6 +80,8 @@ function AddCardModal({ navigation, onSubmit, route }) {
   function onCancel() {
     navigation.navigate("CardGame");
   }
+
+
 
   const validateInputs = () => {
     if (!word && !translation) {
@@ -134,7 +137,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
           updatedTranslation: translation,
         })
       );
-      onCancel();
+      onCancel()
     } else if (isPlaying) {
       if (
         upperCaseTranslation === savedtranslation ||
@@ -162,7 +165,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
       if (checkIfExists > -1) {
         return Alert.alert(alerts.cardExists, alerts.cardExists2);
       } else {
-        const cardId = Math.random().toString();
+        const cardId = Math.random().toString() + "-" + word;
         dispatch(addCard({ cardId, word, translation }));
 
         console.log("New card:", { cardId, word, translation });
@@ -212,14 +215,14 @@ function AddCardModal({ navigation, onSubmit, route }) {
               width: "100%",
             }}
           >
-            {(isAdding || isEditing) && (
+            {/* {(isAdding || isEditing) && (
               <AntDesign
                 name="infocirlceo"
                 size={30}
                 color="black"
                 style={{ opacity: 0.6, right: 15, top: 7 }}
               />
-            )}
+            )} */}
             {isPlaying && isCorrect === "correct" && (
               <FontAwesome
                 name="check-circle"

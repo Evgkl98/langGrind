@@ -1,4 +1,11 @@
-import { Text, SafeAreaView, View, Pressable, TextInput } from "react-native";
+import {
+  Text,
+  SafeAreaView,
+  View,
+  Pressable,
+  TextInput,
+  Alert,
+} from "react-native";
 import * as Linking from "expo-linking";
 import { StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
@@ -10,17 +17,36 @@ import * as WebBrowser from "expo-web-browser";
 import { Dimensions } from "react-native";
 import { MotiPressable } from "moti/interactions";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useState } from "react";
 
 export default function FeedbackScreen({ navigation }) {
   const { settingsText } = landAppLogic();
   const windowWidth = Dimensions.get("window").width;
+  const windowHeight = Dimensions.get("window").height;
+
+  const [message, setMessage] = useState("");
+
+  function sendMessage() {
+    if (message === ""){
+      return Alert.alert("Empty input field", "Please check your feedback message")
+    } else {
+      Alert.alert("Thank you for your feedback")
+      setTimeout(goBack, 1000)
+    }
+    console.log(message);
+    
+  }
 
   function goBack() {
     navigation.navigate("SettingsScreen");
   }
 
   return (
-    <>
+    <KeyboardAwareScrollView
+      style={{ backgroundColor: styles.container.backgroundColor }}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+    >
       <StatusBar style="dark" />
       <SafeAreaView
         style={[
@@ -28,7 +54,7 @@ export default function FeedbackScreen({ navigation }) {
           { backgroundColor: styles.container.backgroundColor },
         ]}
       >
-        <View style={styles.container}>
+        <View style={[styles.container, { height: windowHeight * 0.95 }]}>
           <View style={{ flex: 1, paddingBottom: 5 }}>
             <CustomHeader
               onBack={goBack}
@@ -44,13 +70,19 @@ export default function FeedbackScreen({ navigation }) {
                 width: windowWidth * 0.85,
                 flexDirection: "column",
                 justifyContent: "space-evenly",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <Text style={{ fontFamily: "Inter-Black", fontSize: 30 }}>
                 Tell me something {":)"}
               </Text>
-              <Text style={{ fontFamily: "Inter-Light", fontSize: 15, textAlign: "center" }}>
+              <Text
+                style={{
+                  fontFamily: "Inter-Light",
+                  fontSize: 15,
+                  textAlign: "center",
+                }}
+              >
                 Here you can freely write about bugs, improvements and your
                 ideas.
               </Text>
@@ -70,6 +102,7 @@ export default function FeedbackScreen({ navigation }) {
                 color="black"
               />
               <TextInput
+                onChangeText={(text) => setMessage(text)}
                 multiline
                 textAlignVertical="top"
                 placeholder="Write about your experience with app..."
@@ -83,10 +116,11 @@ export default function FeedbackScreen({ navigation }) {
                   paddingHorizontal: 10,
                   paddingTop: 10,
                   paddingBottom: 10,
-                  marginBottom: 30,
+                  marginBottom: 10,
                 }}
               ></TextInput>
               <MotiPressable
+                onPress={sendMessage}
                 style={[styles.cardSection, { width: windowWidth * 0.85 }]}
                 from={{ scale: 1 }}
                 animate={({ pressed }) => {
@@ -111,14 +145,13 @@ export default function FeedbackScreen({ navigation }) {
           </View>
         </View>
       </SafeAreaView>
-    </>
+    </KeyboardAwareScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1 },
   container: {
-    flex: 1,
     backgroundColor: "#ffd700",
   },
   content: {

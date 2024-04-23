@@ -7,16 +7,14 @@ import { removeCard } from "../store/myVocab";
 import Card from "../components/Card";
 import {
   SlideOutLeft,
-  FadeIn,
   LinearTransition,
+  Easing,
 } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
 import landAppLogic from "../data/langAppLogic";
 
-
-
 function CardGame({ navigation }) {
-  const {gameText} = landAppLogic()
+  const { gameText } = landAppLogic();
   const words = useSelector((state) => state.cardReducer);
 
   function goBack() {
@@ -30,9 +28,6 @@ function CardGame({ navigation }) {
   const onRemove = (cardId) => {
     dispatch(removeCard(cardId));
   };
-
-
-
 
   console.log(words);
 
@@ -53,12 +48,18 @@ function CardGame({ navigation }) {
           >
             {words.length === 0 ? (
               <Animated.Text
-                style={{ fontFamily: "Inter-Light", fontSize: 30, margin: 40, textAlign: "center" }}
+                style={{
+                  fontFamily: "Inter-Light",
+                  fontSize: 30,
+                  margin: 40,
+                  textAlign: "center",
+                }}
               >
                 {gameText.noCards}
               </Animated.Text>
             ) : (
               <Animated.FlatList
+                itemLayoutAnimation={LinearTransition.springify()}
                 exiting={SlideOutLeft}
                 data={words}
                 keyExtractor={(item) => item.cardId}
@@ -67,18 +68,25 @@ function CardGame({ navigation }) {
                 showsVerticalScrollIndicator={false}
                 renderItem={(itemData) => {
                   return (
-                    <Card
-                      removeId={itemData.item.cardId}
-                      cardId={itemData.item.cardId}
-                      cardTranslation={itemData.item.translation}
-                      cardWord={itemData.item.word}
-                      cardStatus={itemData.item.cardStatus}
-                      onDelete={() => {
-                        onRemove(itemData.item.cardId);
-                      }}
+                    <Animated.View
+                      exiting={SlideOutLeft.duration(300)
+                        .easing(Easing.ease)
+                        .springify()}
+                      layout={LinearTransition}
                     >
-                      {itemData.item.word}
-                    </Card>
+                      <Card
+                        removeId={itemData.item.cardId}
+                        cardId={itemData.item.cardId}
+                        cardTranslation={itemData.item.translation}
+                        cardWord={itemData.item.word}
+                        cardStatus={itemData.item.cardStatus}
+                        onDelete={() => {
+                          onRemove(itemData.item.cardId);
+                        }}
+                      >
+                        {itemData.item.word}
+                      </Card>
+                    </Animated.View>
                   );
                 }}
               ></Animated.FlatList>

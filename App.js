@@ -14,6 +14,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import SetLanguageScreen from "./screens/SetLanguageScreen";
 import AboutScreen from "./screens/AboutScreen";
 import FeedbackScreen from "./screens/FeedbackScreen";
+import Translator from "./screens/TranslatorScreen";
 
 const Stack = createNativeStackNavigator();
 

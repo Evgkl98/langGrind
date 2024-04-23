@@ -1,11 +1,17 @@
 import { StyleSheet, Text, Pressable, View } from "react-native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { useNavigation } from "@react-navigation/native";
-import Animated from "react-native-reanimated";
+import Animated, {
+  SlideInDown,
+  SlideInRight,
+  SlideInUp,
+} from "react-native-reanimated";
 import { FadeIn } from "react-native-reanimated";
 import { LinearTransition } from "react-native-reanimated";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useRef, useEffect, useState } from "react";
+import { Easing } from "react-native-reanimated";
 
 import landAppLogic from "../data/langAppLogic";
 
@@ -17,9 +23,10 @@ export default function Card({
   onDelete,
   cardStatus,
 }) {
-
-  const {buttons} = landAppLogic();
+  const { buttons } = landAppLogic();
   const navigation = useNavigation();
+
+  const swipeRef = useRef();
 
   console.log(cardStatus);
 
@@ -61,7 +68,10 @@ export default function Card({
     return (
       <Pressable
         style={[styles.box, { marginLeft: 25 }]}
-        onPress={() => editCard(cardId, cardWord, cardTranslation)}
+        onPress={() => {
+          editCard(cardId, cardWord, cardTranslation);
+          setTimeout(() => swipeRef.current.close(), 1000);
+        }}
       >
         <Text
           style={{
@@ -77,12 +87,15 @@ export default function Card({
   };
 
   return (
-    <Animated.View entering={FadeIn} layout={LinearTransition}>
+    <Animated.View
+      entering={SlideInDown.easing(Easing.ease).springify().mass(0.4)} /*layout={LinearTransition}*/
+    >
       <Swipeable
         renderRightActions={deleteBox}
         renderLeftActions={editBox}
         overshootLeft={false}
         overshootRight={false}
+        ref={swipeRef}
       >
         <Pressable onPress={playGame}>
           <View style={styles.cardItem}>
