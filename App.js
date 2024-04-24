@@ -9,16 +9,17 @@ import CardGame from "./screens/CardGame";
 import AddCardModal from "./screens/AddCardModal";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
-import CardContent from "./screens/CardContent";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import SetLanguageScreen from "./screens/SetLanguageScreen";
 import AboutScreen from "./screens/AboutScreen";
 import FeedbackScreen from "./screens/FeedbackScreen";
-import Translator from "./screens/TranslatorScreen";
+import { Platform } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const modalAnimation = Platform.OS === "android" ? "slide_from_bottom" : "default"
+
   return (
     <>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -58,7 +59,7 @@ export default function App() {
                 options={{
                   gestureEnabled: true,
                   presentation: "modal",
-                  animation: "default",
+                  animation: modalAnimation,
                 }}
               />
               <Stack.Screen

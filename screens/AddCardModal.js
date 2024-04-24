@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Text,
   Button,
-  TouchableOpacity,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDispatch } from "react-redux";
@@ -14,10 +13,11 @@ import { Alert } from "react-native";
 import * as Haptics from "expo-haptics";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
 import { Platform } from "react-native";
 import { useSelector } from "react-redux";
 import landAppLogic from "../data/langAppLogic";
+import { useWindowDimensions } from "react-native";
+
 
 function AddCardModal({ navigation, onSubmit, route }) {
   const { modalText, buttons, alerts } = landAppLogic();
@@ -30,8 +30,6 @@ function AddCardModal({ navigation, onSubmit, route }) {
   const isAdding = route.params?.isAdding;
 
   const words = useSelector((state) => state.cardReducer);
-
-  console.log(words);
 
   const [isDisabled, setIsDisabled] = useState(false);
 
@@ -48,6 +46,10 @@ function AddCardModal({ navigation, onSubmit, route }) {
   const [word, setWord] = useState(isEditing || isPlaying ? savedWord : "");
   const [translation, setTranslation] = useState(translationLabel());
   const [isCorrect, setIsCorrect] = useState("default");
+
+  const extraPadding = Platform.OS === "android" ? 20 : 0;
+  const {height} = useWindowDimensions();
+  const adjustedHeight = Platform.OS === "android" ? height * 0.8 : 500;
 
 
   const dispatch = useDispatch();
@@ -81,14 +83,9 @@ function AddCardModal({ navigation, onSubmit, route }) {
     navigation.navigate("CardGame");
   }
 
-
-
   const validateInputs = () => {
     if (!word && !translation) {
-      Alert.alert(
-        alerts.noTextAndTranslation,
-        alerts.noTextAndTranslation2,
-      );
+      Alert.alert(alerts.noTextAndTranslation, alerts.noTextAndTranslation2);
       setInputsValidation({
         wordInputIsValid: false,
         translationInputIsValid: false,
@@ -100,10 +97,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
         wordInputIsValid: false,
       }));
     } else if (!translation) {
-      Alert.alert(
-        alerts.noTranslation,
-        alerts.noTranslation2
-      );
+      Alert.alert(alerts.noTranslation, alerts.noTranslation2);
       setInputsValidation((prevInputs) => ({
         ...prevInputs,
         translationInputIsValid: false,
@@ -137,7 +131,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
           updatedTranslation: translation,
         })
       );
-      onCancel()
+      onCancel();
     } else if (isPlaying) {
       if (
         upperCaseTranslation === savedtranslation ||
@@ -179,8 +173,13 @@ function AddCardModal({ navigation, onSubmit, route }) {
 
   return (
     <KeyboardAwareScrollView
-      style={{ backgroundColor: styles.container.backgroundColor }}
-      resetScrollToCoords={{ x: 0, y: 0 }}
+      style={{
+        flex: 1,
+        backgroundColor: styles.container.backgroundColor,
+        paddingTop: extraPadding
+      }}
+      // resetScrollToCoords={{ x: 0, y: 0 }}
+      // contentContainerStyle={{marginBottom: "auto", marginTop: "auto"}}
     >
       <View style={styles.container}>
         <View
@@ -207,7 +206,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
             {wordLabel()}
           </Text>
         </View>
-        <View style={styles.card}>
+        <View style={[styles.card, {height: adjustedHeight}]}>
           <View
             style={{
               flexDirection: "row",
@@ -229,7 +228,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
                 borderColor="black"
                 size={50}
                 color="green"
-                style={{ top: "5%", right: "17%" }}
+                style={{ top: "5%", right: "17%"}}
               />
             )}
             {isPlaying && isCorrect === "wrong" && translation && (
@@ -243,7 +242,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
           </View>
           <View
             style={{
-              height: 250,
+              flex: 1,
               width: "100%",
               justifyContent: "center",
               alignItems: "center",
@@ -257,7 +256,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
                 fontSize: 35,
                 marginBottom: 15,
                 textAlign: "center",
-                marginHorizontal: 10,
+                marginHorizontal: 10
               }}
             >
               {word}
@@ -268,7 +267,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
                   fontFamily: "Inter-Light",
                   fontSize: 25,
                   textAlign: "center",
-                  marginHorizontal: 10,
+                  marginHorizontal: 10
                 },
                 isCorrect === "correct" && { color: "green" },
               ]}
@@ -297,7 +296,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
               setWord(text);
             }}
             value={isEditing && word}
-            maxLength={40}
+            maxLength={30}
             textAlignVertical="top"
           />
           <TextInput
@@ -322,10 +321,10 @@ function AddCardModal({ navigation, onSubmit, route }) {
               setTranslation(wordTranslation);
             }}
             value={isEditing && translation}
-            maxLength={40}
+            maxLength={30}
             textAlignVertical="top"
           />
-          <TouchableOpacity style={[isDisabled && { opacity: 0 }]}>
+          <View style={[isDisabled && { opacity: 0 }]}>
             <View
               style={{
                 flexDirection: "row",
@@ -350,7 +349,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
                 onPress={onSubmit}
               ></Button>
             </View>
-          </TouchableOpacity>
+          </View>
         </View>
       </View>
     </KeyboardAwareScrollView>
@@ -361,11 +360,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#0000FF",
-    justifyContent: "center",
     alignItems: "center",
   },
   card: {
-    height: 500,
     marginTop: 20,
     width: "90%",
     backgroundColor: "#ffd700",
@@ -387,9 +384,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "red",
     backgroundColor: "#FFD6D7",
-  },
-  cancelButton: {},
-  confirmButton: {},
+  }
 });
 
 export default AddCardModal;

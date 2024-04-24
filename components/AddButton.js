@@ -13,7 +13,7 @@ export default function AddButton({ onPress, withoutBorder }) {
         <Ionicons name="add" size={23} color="black" />
         <Text
           style={{
-            fontFamily: "Inter-Light",
+            fontFamily: "Inter-Regular",
             fontSize: 20,
             color: "black",
           }}

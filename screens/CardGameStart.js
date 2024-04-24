@@ -1,4 +1,3 @@
-import { MotiView } from "moti"; 
 import { Text, SafeAreaView, View } from "react-native";
 import { StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
@@ -49,8 +48,7 @@ export default function CardGameStart({ navigation }) {
                 fontSize: 20,
                 color: "black",
                 bottom: "10%",
-                textAlign: "center",
-                paddingHorizontal: 20
+                textAlign: "center"
               }}
             >
               {gameStartText.subtitle}
@@ -92,6 +90,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#ffd700", 
+    width: "90%",
+    marginLeft: "auto",
+    marginRight: "auto"
   },
   playButton: {
     height: 140,

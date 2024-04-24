@@ -2,9 +2,12 @@ import { StyleSheet, Text, Pressable, View } from "react-native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { useNavigation } from "@react-navigation/native";
 import Animated, {
+  FadeInDown,
+  FadeOut,
   SlideInDown,
   SlideInRight,
   SlideInUp,
+  SlideOutLeft,
 } from "react-native-reanimated";
 import { FadeIn } from "react-native-reanimated";
 import { LinearTransition } from "react-native-reanimated";
@@ -12,6 +15,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRef, useEffect, useState } from "react";
 import { Easing } from "react-native-reanimated";
+import { Platform } from "react-native";
 
 import landAppLogic from "../data/langAppLogic";
 
@@ -28,7 +32,15 @@ export default function Card({
 
   const swipeRef = useRef();
 
-  console.log(cardStatus);
+  const enteringAnimation =
+    Platform.OS === "ios"
+      ? SlideInDown.easing(Easing.ease).springify().mass(0.4)
+      : null;
+
+  const exitingAnimation =
+    Platform.OS === "ios"
+      ? SlideOutLeft.duration(300).easing(Easing.ease).springify()
+      : null;
 
   function playGame() {
     navigation.navigate("AddCardModal", {
@@ -87,9 +99,7 @@ export default function Card({
   };
 
   return (
-    <Animated.View
-      entering={SlideInDown.easing(Easing.ease).springify().mass(0.4)} /*layout={LinearTransition}*/
-    >
+    <Animated.View entering={enteringAnimation} exiting={exitingAnimation}>
       <Swipeable
         renderRightActions={deleteBox}
         renderLeftActions={editBox}

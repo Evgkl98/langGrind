@@ -1,8 +1,7 @@
 import { Text, View, StyleSheet, StatusBar, SafeAreaView } from "react-native";
-
-// import CustomHeader from "../components/CustomHeader";
 import { MotiPressable } from "moti/interactions";
 import { MotiView } from "moti";
+import { useWindowDimensions } from "react-native";
 
 // Language imports:
 import landAppLogic from "../data/langAppLogic";
@@ -16,14 +15,13 @@ export default function ChooseExercise({ navigation }) {
   function goToCards() {
     navigation.navigate("CardGameStart");
   }
-
-  // function goBack() {
-  //   navigation.navigate("StartScreen");
-  // }
-
   function goToSettings() {
     navigation.navigate("SettingsScreen");
   }
+
+  const {width, height} = useWindowDimensions()
+
+  console.log(width, height)
 
   return (
     <>
@@ -35,11 +33,10 @@ export default function ChooseExercise({ navigation }) {
         ]}
       >
         <View style={styles.container}>
-          {/* <CustomHeader onBack={goBack} buttonColor="#ffd700" /> */}
           <View style={styles.exercises}>
             <MotiPressable
               onPress={goToCards}
-              style={styles.cubicSection}
+              style={[styles.cubicSection]}
               from={{ borderRadius: 8, scale: 0 }}
               animate={({ pressed }) => {
                 "worklet";
@@ -50,9 +47,10 @@ export default function ChooseExercise({ navigation }) {
               }}
             >
               <Text
+                adjustsFontSizeToFit={true}
                 style={{
                   fontFamily: "Inter-Black",
-                  fontSize: 22,
+                  fontSize: 25,
                   color: "black",
                 }}
               >
@@ -66,18 +64,12 @@ export default function ChooseExercise({ navigation }) {
             >
               <MotiPressable
                 style={[styles.cubicSection, { opacity: 0.8 }]}
-                // animate={({ pressed }) => {
-                //   "worklet";
-
-                //   return {
-                //     scale: pressed ? 0.8 : 1,
-                //   };
-                // }}
               >
                 <Text
+                  adjustsFontSizeToFit={true}
                   style={{
                     fontFamily: "Inter-Black",
-                    fontSize: 23,
+                    fontSize: 22,
                     color: "black",
                     textAlign: "center",
                   }}
@@ -85,6 +77,7 @@ export default function ChooseExercise({ navigation }) {
                   {sectionsText.secondSection}
                 </Text>
                 <Text
+                  adjustsFontSizeToFit={true}
                   style={{
                     fontFamily: "Inter-Light",
                     fontSize: 15,
@@ -141,12 +134,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#0000FF",
   },
   cubicSection: {
-    height: 150,
-    width: 150,
+    height: 160,
+    width: 155,
     marginVertical: 20,
     backgroundColor: "#ffd700",
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
-  },
+  } 
 });

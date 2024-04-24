@@ -12,8 +12,8 @@ export default function landAppLogic() {
         thirdSection: "Settings",
       },
       gameStartText: {
-        title: "Instructions",
-        subtitle: "Tap on a card and translate the word on it",
+        title: "How to play?",
+        subtitle: "Tap on a card and translate the word on it. Swipe right to edit the word. Swipe left to delete the card.",
       },
       buttons: {
         backButton: "Back",
@@ -41,11 +41,9 @@ export default function landAppLogic() {
         aboutSection: "About",
         feedbackSection: "Feedback",
       },
-      aboutText: {
-
-      },
+      aboutText: {},
       languagesText: {
-        languageTitle: "Language"
+        languageTitle: "Language",
       },
       alerts: {
         noTextAndTranslation: "Empty input fields",
@@ -57,14 +55,14 @@ export default function landAppLogic() {
         wrongAnswer: "Wrong translation",
         wrongAnswer2: "Oops... Try once again!",
         cardExists: "Card already exists",
-        cardExists2: "Try to add another card"
+        cardExists2: "Try to add another card",
       },
     },
     Deutsch: {
       firstSection: "Karten",
       secondSection: "Übersetzer",
       secondSectionSoon: "Kommt bald...",
-      thirdSection: "Einstellung"
+      thirdSection: "Einstellung",
     },
     Russian: {
       sectionsText: {
@@ -74,8 +72,9 @@ export default function landAppLogic() {
         thirdSection: "Настройки",
       },
       gameStartText: {
-        title: "Правила игры",
-        subtitle: "Нажмите на карточку и переведите слово",
+        title: "Как играть?",
+        subtitle:
+          "Нажмите на карточку и переведите слово. Чтобы отредактировать слово, смахните карточку вправо. Чтобы удалить - смахните влево.",
       },
       buttons: {
         backButton: "Назад",
@@ -103,11 +102,9 @@ export default function landAppLogic() {
         aboutSection: "О приложении",
         feedbackSection: "Обратная связь",
       },
-      aboutText: {
-
-      },
+      aboutText: {},
       languagesText: {
-        languageTitle: "Язык"
+        languageTitle: "Язык",
       },
       alerts: {
         noTextAndTranslation: "Незаполненные поля",
@@ -130,8 +127,8 @@ export default function landAppLogic() {
         thirdSection: "Nastavení",
       },
       gameStartText: {
-        title: "Pravidla hry",
-        subtitle: "Tapněte kartu a přeložtě slovo",
+        title: "Jak na to?",
+        subtitle: "Tapněte kartu a přeložtě slovo. Posunem vrpavo upravtě obsah karty. Posunem vlevo ji odstraňte.",
       },
       buttons: {
         backButton: "Zpátky",
@@ -160,7 +157,7 @@ export default function landAppLogic() {
         feedbackSection: "Zpětná vazba",
       },
       languagesText: {
-        languageTitle: "Jazyk"
+        languageTitle: "Jazyk",
       },
       alerts: {
         noTextAndTranslation: "Prazdná pole",

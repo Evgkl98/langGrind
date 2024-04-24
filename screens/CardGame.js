@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import { useDispatch } from "react-redux";
 import CustomHeader from "../components/CustomHeader";
 import AddButton from "../components/AddButton";
@@ -12,10 +12,14 @@ import {
 } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
 import landAppLogic from "../data/langAppLogic";
+import { AntDesign } from "@expo/vector-icons";
 
 function CardGame({ navigation }) {
   const { gameText } = landAppLogic();
   const words = useSelector((state) => state.cardReducer);
+
+  const animateItems =
+    Platform.OS === "ios" ? LinearTransition.springify() : null;
 
   function goBack() {
     navigation.navigate("CardGameStart");
@@ -28,8 +32,6 @@ function CardGame({ navigation }) {
   const onRemove = (cardId) => {
     dispatch(removeCard(cardId));
   };
-
-  console.log(words);
 
   return (
     <>
@@ -58,38 +60,50 @@ function CardGame({ navigation }) {
                 {gameText.noCards}
               </Animated.Text>
             ) : (
-              <Animated.FlatList
-                itemLayoutAnimation={LinearTransition.springify()}
-                exiting={SlideOutLeft}
-                data={words}
-                keyExtractor={(item) => item.cardId}
-                style={styles.flatListClass}
-                // bounces={false}
-                showsVerticalScrollIndicator={false}
-                renderItem={(itemData) => {
-                  return (
-                    <Animated.View
-                      exiting={SlideOutLeft.duration(300)
-                        .easing(Easing.ease)
-                        .springify()}
-                      layout={LinearTransition}
-                    >
-                      <Card
-                        removeId={itemData.item.cardId}
-                        cardId={itemData.item.cardId}
-                        cardTranslation={itemData.item.translation}
-                        cardWord={itemData.item.word}
-                        cardStatus={itemData.item.cardStatus}
-                        onDelete={() => {
-                          onRemove(itemData.item.cardId);
-                        }}
-                      >
-                        {itemData.item.word}
-                      </Card>
-                    </Animated.View>
-                  );
-                }}
-              ></Animated.FlatList>
+              <>
+                <Animated.FlatList
+                  itemLayoutAnimation={animateItems}
+                  exiting={SlideOutLeft.duration(300)
+                    .easing(Easing.ease)
+                    .springify()
+                    .mass(0.4)}
+                  data={words}
+                  keyExtractor={(item) => item.cardId}
+                  style={styles.flatListClass}
+                  showsVerticalScrollIndicator={false}
+                  renderItem={(itemData) => {
+                    return (
+                      <>
+                        <Card
+                          removeId={itemData.item.cardId}
+                          cardId={itemData.item.cardId}
+                          cardTranslation={itemData.item.translation}
+                          cardWord={itemData.item.word}
+                          cardStatus={itemData.item.cardStatus}
+                          onDelete={() => {
+                            onRemove(itemData.item.cardId);
+                          }}
+                        >
+                          {itemData.item.word}
+                        </Card>
+                      </>
+                    );
+                  }}
+                ></Animated.FlatList>
+                {/* <AntDesign
+                  name="infocirlceo"
+                  size={40}
+                  color="black"
+                  style={{
+                    opacity: 0.5,
+                    alignSelf: "flex-end",
+                    zIndex: 50,
+                    position: "absolute",
+                    top: 510,
+                    right: 15
+                  }}
+                /> */}
+              </>
             )}
             {words.length === 0 && <AddButton onPress={addCard}></AddButton>}
           </View>
@@ -105,7 +119,6 @@ const styles = StyleSheet.create({
   playground: {
     flex: 1,
     backgroundColor: "#ffd700",
-    // backgroundColor: "red",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",

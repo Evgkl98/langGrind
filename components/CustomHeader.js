@@ -19,7 +19,7 @@ function CustomHeader({
       style={[
         styles.container,
         twoButtons && { justifyContent: "space-between" },
-        Platform.OS === "android" && {paddingTop: 10}
+        Platform.OS === "android" && { paddingTop: 10 },
       ]}
     >
       <BackButton onPress={onBack} backButtonColor={buttonColor} />
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    minHeight: "9%"
+    minHeight: "9%",
   },
   headerBox: {
     position: "absolute",
