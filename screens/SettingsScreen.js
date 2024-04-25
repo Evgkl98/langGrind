@@ -5,6 +5,7 @@ import { MotiPressable } from "moti/interactions";
 import CustomHeader from "../components/CustomHeader";
 import landAppLogic from "../data/langAppLogic";
 
+
 export default function SettingsScreen({ navigation }) {
   const { settingsText } = landAppLogic();
 

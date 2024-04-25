@@ -7,6 +7,7 @@ import { useWindowDimensions } from "react-native";
 import landAppLogic from "../data/langAppLogic";
 import { useSelector } from "react-redux";
 
+
 export default function ChooseExercise({ navigation }) {
   const { sectionsText } = landAppLogic();
 

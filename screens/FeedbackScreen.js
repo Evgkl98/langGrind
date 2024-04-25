@@ -2,23 +2,19 @@ import {
   Text,
   SafeAreaView,
   View,
-  Pressable,
   TextInput,
   Alert,
 } from "react-native";
-import * as Linking from "expo-linking";
 import { StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { MotiView } from "moti";
 import CustomHeader from "../components/CustomHeader";
 import landAppLogic from "../data/langAppLogic";
-import { EvilIcons } from "@expo/vector-icons";
-import * as WebBrowser from "expo-web-browser";
 import { Dimensions } from "react-native";
 import { MotiPressable } from "moti/interactions";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useState } from "react";
+
 
 export default function FeedbackScreen({ navigation }) {
   const { settingsText } = landAppLogic();

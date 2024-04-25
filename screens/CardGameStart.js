@@ -7,6 +7,7 @@ import CustomHeader from "../components/CustomHeader";
 import landAppLogic from "../data/langAppLogic";
 
 
+
 export default function CardGameStart({ navigation }) {
 
   const {gameStartText} = landAppLogic()

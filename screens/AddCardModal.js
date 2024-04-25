@@ -19,6 +19,7 @@ import landAppLogic from "../data/langAppLogic";
 import { useWindowDimensions } from "react-native";
 
 
+
 function AddCardModal({ navigation, onSubmit, route }) {
   const { modalText, buttons, alerts } = landAppLogic();
 

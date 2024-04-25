@@ -6,6 +6,7 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react"; 
 
+
 export default function StartScreen({ navigation }) {
   const [cubeScale, setCubeScale] = useState(1.5);
 

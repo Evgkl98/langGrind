@@ -5,6 +5,7 @@ import AddButton from "./AddButton";
 import { Dimensions } from "react-native";
 import { Platform } from "react-native";
 
+
 function CustomHeader({
   onBack,
   buttonColor,

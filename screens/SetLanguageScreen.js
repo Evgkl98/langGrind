@@ -16,6 +16,7 @@ import { MotiPressable } from "moti/interactions";
 import landAppLogic from "../data/langAppLogic";
 
 
+
 export default function SetLanguageScreen({ navigation }) {
   const languageIs = useSelector((state) => state.languageReducer);
 

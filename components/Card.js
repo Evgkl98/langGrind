@@ -2,18 +2,12 @@ import { StyleSheet, Text, Pressable, View } from "react-native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { useNavigation } from "@react-navigation/native";
 import Animated, {
-  FadeInDown,
-  FadeOut,
   SlideInDown,
-  SlideInRight,
-  SlideInUp,
   SlideOutLeft,
 } from "react-native-reanimated";
-import { FadeIn } from "react-native-reanimated";
-import { LinearTransition } from "react-native-reanimated";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useRef, useEffect, useState } from "react";
+import { useRef, } from "react";
 import { Easing } from "react-native-reanimated";
 import { Platform } from "react-native";
 

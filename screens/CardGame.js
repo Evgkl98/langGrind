@@ -12,7 +12,7 @@ import {
 } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
 import landAppLogic from "../data/langAppLogic";
-import { AntDesign } from "@expo/vector-icons";
+
 
 function CardGame({ navigation }) {
   const { gameText } = landAppLogic();

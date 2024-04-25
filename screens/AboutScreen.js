@@ -1,5 +1,4 @@
 import { Text, SafeAreaView, View, Pressable } from "react-native";
-import * as Linking from 'expo-linking';
 import { StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { MotiView } from "moti";
@@ -7,6 +6,7 @@ import CustomHeader from "../components/CustomHeader";
 import landAppLogic from "../data/langAppLogic";
 import { EvilIcons } from "@expo/vector-icons";
 import * as WebBrowser from 'expo-web-browser';
+
 
 
 export default function AboutScreen({ navigation }) {

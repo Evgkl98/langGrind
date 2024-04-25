@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Alert } from "react-native";
-import landAppLogic from "../data/langAppLogic";
+
 
 const appLanguageSlice = createSlice({
   name: "appLang",
