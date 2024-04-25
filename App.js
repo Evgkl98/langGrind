@@ -14,20 +14,46 @@ import SetLanguageScreen from "./screens/SetLanguageScreen";
 import AboutScreen from "./screens/AboutScreen";
 import FeedbackScreen from "./screens/FeedbackScreen";
 import { Platform } from "react-native";
+import { useEffect, useState, useCallback } from "react";
+import * as SplashScreen from "expo-splash-screen"
+import { init } from "./data/database";
 
 const Stack = createNativeStackNavigator();
+SplashScreen.preventAutoHideAsync()
 
 export default function App() {
+
+  const [dbInitialized, setDbInitialized] = useState(false);
+
+  useEffect(() => {
+    init().then(() => {
+      setDbInitialized(true)
+      console.log("Success");
+    }).catch((err)=> {
+      console.log(err);
+    });
+  },[])
+
+  const onLayoutRootView = useCallback(async () => {
+    if (dbInitialized) {
+      await SplashScreen.hideAsync();
+    }
+  }, [dbInitialized]);
+
+  if (!dbInitialized) {
+    return null;
+  }
+
   const modalAnimation = Platform.OS === "android" ? "slide_from_bottom" : "default"
 
   return (
     <>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar style="dark" />
-        <Provider store={store}>
+        <Provider store={store} >
           <NavigationContainer>
             <Stack.Navigator
               initialRouteName="StartScreen"
+              onLayout={onLayoutRootView}
               screenOptions={{
                 // animationDuration: "300",
                 headerShown: false,

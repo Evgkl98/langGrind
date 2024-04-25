@@ -30,8 +30,6 @@ export default function FeedbackScreen({ navigation }) {
       Alert.alert("Thank you for your feedback")
       setTimeout(goBack, 1000)
     }
-    console.log(message);
-    
   }
 
   function goBack() {

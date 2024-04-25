@@ -1,11 +1,5 @@
-import { useState } from "react";
-import {
-  View,
-  TextInput,
-  StyleSheet,
-  Text,
-  Button,
-} from "react-native";
+import { useEffect, useState } from "react";
+import { View, TextInput, StyleSheet, Text, Button } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDispatch } from "react-redux";
 import { addCard, changeCardStatus, editCard } from "../store/myVocab";
@@ -17,8 +11,8 @@ import { Platform } from "react-native";
 import { useSelector } from "react-redux";
 import landAppLogic from "../data/langAppLogic";
 import { useWindowDimensions } from "react-native";
-
-
+import { Card } from "../modal/card";
+import { insertCard } from "../data/database";
 
 function AddCardModal({ navigation, onSubmit, route }) {
   const { modalText, buttons, alerts } = landAppLogic();
@@ -33,6 +27,9 @@ function AddCardModal({ navigation, onSubmit, route }) {
   const words = useSelector((state) => state.cardReducer);
 
   const [isDisabled, setIsDisabled] = useState(false);
+
+
+
 
   const translationLabel = () => {
     if (isEditing) {
@@ -49,11 +46,17 @@ function AddCardModal({ navigation, onSubmit, route }) {
   const [isCorrect, setIsCorrect] = useState("default");
 
   const extraPadding = Platform.OS === "android" ? 20 : 0;
-  const {height} = useWindowDimensions();
+  const { height } = useWindowDimensions();
   const adjustedHeight = Platform.OS === "android" ? height * 0.8 : 500;
 
-
   const dispatch = useDispatch();
+
+  async function addNewCard(){
+    const cardId = Math.random().toString() + "-" + word;
+    const newCard = { ...new Card(cardId, word, translation, false) }
+    await insertCard(newCard);
+    dispatch(addCard(newCard));
+  }
 
   //Validation part:
 
@@ -160,11 +163,10 @@ function AddCardModal({ navigation, onSubmit, route }) {
       if (checkIfExists > -1) {
         return Alert.alert(alerts.cardExists, alerts.cardExists2);
       } else {
-        const cardId = Math.random().toString() + "-" + word;
-        dispatch(addCard({ cardId, word, translation }));
-
-        console.log("New card:", { cardId, word, translation });
-
+        addNewCard();
+        // const cardId = Math.random().toString() + "-" + word;
+        // const newCard = { ...new Card(cardId, word, translation, false) };
+        
         setWord(""), setTranslation("");
 
         onCancel();
@@ -177,7 +179,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
       style={{
         flex: 1,
         backgroundColor: styles.container.backgroundColor,
-        paddingTop: extraPadding
+        paddingTop: extraPadding,
       }}
       // resetScrollToCoords={{ x: 0, y: 0 }}
       // contentContainerStyle={{marginBottom: "auto", marginTop: "auto"}}
@@ -207,7 +209,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
             {wordLabel()}
           </Text>
         </View>
-        <View style={[styles.card, {height: adjustedHeight}]}>
+        <View style={[styles.card, { height: adjustedHeight }]}>
           <View
             style={{
               flexDirection: "row",
@@ -229,7 +231,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
                 borderColor="black"
                 size={50}
                 color="green"
-                style={{ top: "5%", right: "17%"}}
+                style={{ top: "5%", right: "17%" }}
               />
             )}
             {isPlaying && isCorrect === "wrong" && translation && (
@@ -257,7 +259,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
                 fontSize: 35,
                 marginBottom: 15,
                 textAlign: "center",
-                marginHorizontal: 10
+                marginHorizontal: 10,
               }}
             >
               {word}
@@ -268,7 +270,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
                   fontFamily: "Inter-Light",
                   fontSize: 25,
                   textAlign: "center",
-                  marginHorizontal: 10
+                  marginHorizontal: 10,
                 },
                 isCorrect === "correct" && { color: "green" },
               ]}
@@ -385,7 +387,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "red",
     backgroundColor: "#FFD6D7",
-  }
+  },
 });
 
 export default AddCardModal;

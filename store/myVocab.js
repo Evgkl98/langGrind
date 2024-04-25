@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { insertCard } from "../data/database";
 
-const vocabSlice = createSlice({
+const vocabSlice =  createSlice({
   name: "vocabs",
-  initialState: [], //{cardId: "", word: "", translation: ""}
+  initialState: [], //{cardId: "", word: "", translation: "", cardStatus: false}
   reducers: {
     addCard: (state, action) => {
       state.push(action.payload);
+      console.log(action.payload);
+      // insertCard(action.payload);
     },
     removeCard: (state, action) => {
       return state.filter((card) => card.cardId !== action.payload);

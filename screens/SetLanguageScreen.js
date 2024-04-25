@@ -22,16 +22,10 @@ export default function SetLanguageScreen({ navigation }) {
 
   const { languagesText, alerts } = landAppLogic();
 
-  //Use async and await:
-
-
 
   function changeLanguage (lang) {
     setTimeout(() => dispatch(changeAppLanguage(lang)), 400);
   } 
-
-
-
 
   const appLanguages = [
     { id: "1", language: "English" },
@@ -40,7 +34,6 @@ export default function SetLanguageScreen({ navigation }) {
     { id: "4", language: "Czech" },
   ];
 
-  console.log(languageIs);
 
   const dispatch = useDispatch();
 

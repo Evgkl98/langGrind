@@ -1,4 +1,5 @@
-import { Text, View, StyleSheet, StatusBar, SafeAreaView } from "react-native";
+import { Text, View, StyleSheet, SafeAreaView } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import { MotiPressable } from "moti/interactions";
 import { MotiView } from "moti";
 import { useWindowDimensions } from "react-native";
@@ -22,11 +23,10 @@ export default function ChooseExercise({ navigation }) {
 
   const {width, height} = useWindowDimensions()
 
-  console.log(width, height)
 
   return (
     <>
-      <StatusBar barStyle="light-content" />
+      <StatusBar style="inverted" hidden={false} />
       <SafeAreaView
         style={[
           styles.safeArea,

@@ -1,28 +1,23 @@
-import { StyleSheet, View } from "react-native"; 
+import { StyleSheet, View } from "react-native";
 import { MotiView, MotiText } from "moti";
 import { MotiPressable } from "moti/interactions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { useCallback } from "react"; 
-
+import { useCallback } from "react";
+import { StatusBar } from "expo-status-bar";
 
 export default function StartScreen({ navigation }) {
   const [cubeScale, setCubeScale] = useState(1.5);
 
-  function handleScale(isPressed) {
-    if (isPressed && cubeScale === 1.5) {
-      setCubeScale((cubeScale) => (cubeScale = 20));
+  useEffect(() => {
+    setTimeout(() => {
+      setCubeScale(20);
       setTimeout(() => {
         navigation.navigate("ChooseExercise");
       }, 700);
-      setTimeout(() => {
-        setCubeScale((cubeScale) => (cubeScale = 1.5));
-      }, 1100);
-    } else if (isPressed && cubeScale === 20) {
-      setCubeScale((cubeScale) => (cubeScale = 1.5));
-    }
-  }
+    }, 4000);
+  }, []);
 
   const [fontsLoaded, fontError] = useFonts({
     "Inter-Black": require("../assets/fonts/Inter-Black.ttf"),
@@ -44,50 +39,50 @@ export default function StartScreen({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
-      <MotiText
-        style={{ fontFamily: "Inter-Black", fontSize: 40 }}
-        onLayout={onLayoutReview}
-      >
-        LangGrind
-      </MotiText>
-      <MotiPressable
-        onPress={handleScale}
-        
-      >
+    <>
+      <StatusBar hidden />
+      <View style={styles.container}>
+        <MotiText
+          style={{ fontFamily: "Inter-Black", fontSize: 40 }}
+          onLayout={onLayoutReview}
+        >
+          LangGrind
+        </MotiText>
+        <MotiPressable /*onPress={handleScale}*/>
+          <MotiView
+            style={styles.cubic}
+            from={{ scale: cubeScale }}
+            transition={{ duration: 2300, stiffness: 100 }}
+          ></MotiView>
+        </MotiPressable>
         <MotiView
           style={styles.cubic}
-          from={{ scale: cubeScale }}
-          transition={{ duration: 2300 }}
-        ></MotiView>
-      </MotiPressable>
-      <MotiView
-        style={styles.cubic}
-        from={{ scale: 0 }}
-        animate={{
-          rotate: [
-            "0deg",
-            "90deg",
-            "180deg",
-            "270deg",
-            "360deg",
-            "270deg",
-            "180deg",
-            "90deg",
-            "-360deg",
-          ],
-          scale: 1,
-        }}
-        transition={{
-          rotate: {
-            duration: 1000,
-            type: "spring",
-            repeat: Infinity,
-            delay: 0,
-          },
-        }}
-      />
-    </View>
+          from={{ scale: 0 }}
+          animate={{
+            rotate: [
+              "0deg",
+              "90deg",
+              "180deg",
+              "270deg",
+              "360deg",
+              "270deg",
+              "180deg",
+              "90deg",
+              "-360deg",
+            ],
+            scale: 1,
+          }}
+          transition={{
+            rotate: {
+              duration: 1000,
+              type: "spring",
+              repeat: Infinity,
+              delay: 0,
+            },
+          }}
+        />
+      </View>
+    </>
   );
 }
 
