@@ -12,11 +12,17 @@ import {
 } from "react-native-reanimated";
 import Animated from "react-native-reanimated";
 import landAppLogic from "../data/langAppLogic";
-
+import { useEffect, useState } from "react";
+import { fetchCards } from "../data/database";
+import { useIsFocused } from "@react-navigation/native";
+import { deleteCard } from "../data/database";
 
 function CardGame({ navigation }) {
   const { gameText } = landAppLogic();
   const words = useSelector((state) => state.cardReducer);
+  const [cards, setCards] = useState([]);
+
+  const isFocused = useIsFocused();
 
   const animateItems =
     Platform.OS === "ios" ? LinearTransition.springify() : null;
@@ -33,6 +39,15 @@ function CardGame({ navigation }) {
     dispatch(removeCard(cardId));
   };
 
+  useEffect(() => {
+    async function loadCards() {
+      const dbCards = await fetchCards();
+      setCards(dbCards);
+      console.log(dbCards);
+    }
+    loadCards();
+  }, [words]);
+
   return (
     <>
       <SafeAreaView style={styles.safeArea}>
@@ -40,15 +55,15 @@ function CardGame({ navigation }) {
           <CustomHeader
             onBack={goBack}
             onAddCard={addCard}
-            twoButtons={words.length !== 0}
+            twoButtons={cards.length !== 0}
           />
           <View
             style={[
               styles.playground,
-              words.length !== 0 && { paddingBottom: 0 },
+              cards.length !== 0 && { paddingBottom: 0 },
             ]}
           >
-            {words.length === 0 ? (
+            {cards.length === 0 ? (
               <Animated.Text
                 style={{
                   fontFamily: "Inter-Light",
@@ -67,26 +82,26 @@ function CardGame({ navigation }) {
                     .easing(Easing.ease)
                     .springify()
                     .mass(0.4)}
-                  data={words}
-                  keyExtractor={(item) => item.cardId}
+                  data={cards}
+                  keyExtractor={(item) => item.id}
                   style={styles.flatListClass}
                   showsVerticalScrollIndicator={false}
                   renderItem={(itemData) => {
                     return (
-                      <>
-                        <Card
-                          removeId={itemData.item.cardId}
-                          cardId={itemData.item.cardId}
-                          cardTranslation={itemData.item.translation}
-                          cardWord={itemData.item.word}
-                          cardStatus={itemData.item.cardStatus}
-                          onDelete={() => {
-                            onRemove(itemData.item.cardId);
-                          }}
-                        >
-                          {itemData.item.word}
-                        </Card>
-                      </>
+                      <Card
+                        removeId={itemData.item.cardId}
+                        cardId={itemData.item.cardId}
+                        cardDbId={itemData.item.id}
+                        cardTranslation={itemData.item.translation}
+                        cardWord={itemData.item.word}
+                        cardStatus={itemData.item.cardStatus}
+                        onDelete={() => {
+                          deleteCard(itemData.item.id);
+                          onRemove(itemData.item.cardId);
+                        }}
+                      >
+                        {itemData.item.word}
+                      </Card>
                     );
                   }}
                 ></Animated.FlatList>
@@ -105,7 +120,8 @@ function CardGame({ navigation }) {
                 /> */}
               </>
             )}
-            {words.length === 0 && <AddButton onPress={addCard}></AddButton>}
+            {cards.length === 0 && <AddButton onPress={addCard}></AddButton>}
+            {/* {words.length === 0 && <AddButton onPress={addCard}></AddButton>} */}
           </View>
         </View>
       </SafeAreaView>

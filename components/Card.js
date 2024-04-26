@@ -20,10 +20,10 @@ export default function Card({
   cardTranslation,
   onDelete,
   cardStatus,
+  cardDbId
 }) {
   const { buttons } = landAppLogic();
   const navigation = useNavigation();
-
   const swipeRef = useRef();
 
   const enteringAnimation =
@@ -51,6 +51,7 @@ export default function Card({
       cardWord,
       cardTranslation,
       isEditing: true,
+      cardDbId
     });
   }
 
@@ -75,7 +76,8 @@ export default function Card({
       <Pressable
         style={[styles.box, { marginLeft: 25 }]}
         onPress={() => {
-          editCard(cardId, cardWord, cardTranslation);
+          editCard(cardId, cardWord, cardTranslation, cardDbId);
+
           setTimeout(() => swipeRef.current.close(), 1000);
         }}
       >
@@ -110,7 +112,7 @@ export default function Card({
                   fontSize: 23,
                   margin: 19,
                   color: "#ffd700",
-                  textAlign: "left",
+                  textAlign: "auto"
                 }}
               >
                 {children}

@@ -7,7 +7,7 @@ const vocabSlice =  createSlice({
   reducers: {
     addCard: (state, action) => {
       state.push(action.payload);
-      console.log(action.payload);
+      // console.log(action.payload);
       // insertCard(action.payload);
     },
     removeCard: (state, action) => {

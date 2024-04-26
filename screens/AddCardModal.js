@@ -13,10 +13,13 @@ import landAppLogic from "../data/langAppLogic";
 import { useWindowDimensions } from "react-native";
 import { Card } from "../modal/card";
 import { insertCard } from "../data/database";
+import { editDbCard } from "../data/database";
+import { changeDbCardStatus } from "../data/database";
 
 function AddCardModal({ navigation, onSubmit, route }) {
   const { modalText, buttons, alerts } = landAppLogic();
 
+  const savedDbId = route.params?.cardDbId;
   const savedWord = route.params?.cardWord;
   const savedtranslation = route.params?.cardTranslation;
   const savedId = route.params?.cardId;
@@ -54,6 +57,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
   async function addNewCard(){
     const cardId = Math.random().toString() + "-" + word;
     const newCard = { ...new Card(cardId, word, translation, false) }
+    console.log(newCard)
     await insertCard(newCard);
     dispatch(addCard(newCard));
   }
@@ -128,6 +132,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
   function onSubmit() {
     validateInputs();
     if (isEditing && word && translation) {
+      editDbCard(word, translation, savedDbId)
       dispatch(
         editCard({
           cardId: savedId,
@@ -145,6 +150,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
         setIsCorrect("correct");
         setIsDisabled(true);
         dispatch(changeCardStatus({ cardId: savedId, cardStatus: "correct" }));
+        changeDbCardStatus(savedId, "correct")
         setTimeout(onCancel, 1500);
       } else if (translation === "") {
         return;
@@ -152,6 +158,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
         Alert.alert(alerts.wrongAnswer, alerts.wrongAnswer2);
         setIsCorrect("wrong");
         dispatch(changeCardStatus({ cardId: savedId, cardStatus: "wrong" }));
+        changeDbCardStatus(savedId, "wrong")
       }
     } else if (isAdding && word && translation) {
       const checkIfExists = words.findIndex(
@@ -164,8 +171,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
         return Alert.alert(alerts.cardExists, alerts.cardExists2);
       } else {
         addNewCard();
-        // const cardId = Math.random().toString() + "-" + word;
-        // const newCard = { ...new Card(cardId, word, translation, false) };
+
         
         setWord(""), setTranslation("");
 

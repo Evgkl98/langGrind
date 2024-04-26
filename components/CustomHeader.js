@@ -14,7 +14,6 @@ function CustomHeader({
   headerTitle,
 }) {
   const windowWidth = Dimensions.get("window").width;
-  console.log(windowWidth);
   return (
     <View
       style={[
