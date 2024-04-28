@@ -1,28 +1,25 @@
 import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CustomHeader from "../components/CustomHeader";
 import AddButton from "../components/AddButton";
-import { useSelector } from "react-redux";
-import { removeCard } from "../store/myVocab";
+import { changeCurrentAction } from "../store/myVocab";
 import Card from "../components/Card";
-import {
+import Animated, {
   SlideOutLeft,
   LinearTransition,
   Easing,
 } from "react-native-reanimated";
-import Animated from "react-native-reanimated";
 import landAppLogic from "../data/langAppLogic";
 import { useEffect, useState } from "react";
-import { fetchCards } from "../data/database";
-import { useIsFocused } from "@react-navigation/native";
-import { deleteCard } from "../data/database";
+import { fetchCards, deleteCard } from "../data/database";
+
 
 function CardGame({ navigation }) {
   const { gameText } = landAppLogic();
-  const words = useSelector((state) => state.cardReducer);
+
   const [cards, setCards] = useState([]);
 
-  const isFocused = useIsFocused();
+  const currentStatus = useSelector((state) => state.cardReducer);
 
   const animateItems =
     Platform.OS === "ios" ? LinearTransition.springify() : null;
@@ -35,9 +32,8 @@ function CardGame({ navigation }) {
   }
   const dispatch = useDispatch();
 
-  const onRemove = (cardId) => {
-    dispatch(removeCard(cardId));
-  };
+
+  // Fetching data from database:
 
   useEffect(() => {
     async function loadCards() {
@@ -46,7 +42,7 @@ function CardGame({ navigation }) {
       console.log(dbCards);
     }
     loadCards();
-  }, [words]);
+  }, [currentStatus]);
 
   return (
     <>
@@ -89,15 +85,13 @@ function CardGame({ navigation }) {
                   renderItem={(itemData) => {
                     return (
                       <Card
-                        removeId={itemData.item.cardId}
-                        cardId={itemData.item.cardId}
-                        cardDbId={itemData.item.id}
+                        cardId={itemData.item.id}
                         cardTranslation={itemData.item.translation}
                         cardWord={itemData.item.word}
                         cardStatus={itemData.item.cardStatus}
                         onDelete={() => {
                           deleteCard(itemData.item.id);
-                          onRemove(itemData.item.cardId);
+                          dispatch(changeCurrentAction(`deleting item: ${itemData.item.id}`))
                         }}
                       >
                         {itemData.item.word}
@@ -105,23 +99,9 @@ function CardGame({ navigation }) {
                     );
                   }}
                 ></Animated.FlatList>
-                {/* <AntDesign
-                  name="infocirlceo"
-                  size={40}
-                  color="black"
-                  style={{
-                    opacity: 0.5,
-                    alignSelf: "flex-end",
-                    zIndex: 50,
-                    position: "absolute",
-                    top: 510,
-                    right: 15
-                  }}
-                /> */}
               </>
             )}
             {cards.length === 0 && <AddButton onPress={addCard}></AddButton>}
-            {/* {words.length === 0 && <AddButton onPress={addCard}></AddButton>} */}
           </View>
         </View>
       </SafeAreaView>

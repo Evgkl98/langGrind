@@ -16,16 +16,13 @@ export default function StartScreen({ navigation }) {
       setTimeout(() => {
         navigation.navigate("ChooseExercise");
       }, 700);
-    }, 4000);
+    }, 3000);
   }, []);
 
   const [fontsLoaded, fontError] = useFonts({
     "Inter-Black": require("../assets/fonts/Inter-Black.ttf"),
     "Inter-Light": require("../assets/fonts/Inter-Light.ttf"),
-    "Inter-Medium": require("../assets/fonts/Inter-Medium.ttf"),
     "Inter-Regular": require("../assets/fonts/Inter-Regular.ttf"),
-    "InterDisplay-Light": require("../assets/fonts/InterDisplay-Light.ttf"),
-    "Inter-ThinItalic": require("../assets/fonts/Inter-ThinItalic.ttf"),
   });
 
   const onLayoutReview = useCallback(async () => {
@@ -64,11 +61,7 @@ export default function StartScreen({ navigation }) {
               "90deg",
               "180deg",
               "270deg",
-              "360deg",
-              "270deg",
-              "180deg",
-              "90deg",
-              "-360deg",
+              "0deg",
             ],
             scale: 1,
           }}

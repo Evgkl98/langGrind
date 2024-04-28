@@ -2,24 +2,26 @@ import { useEffect, useState } from "react";
 import { View, TextInput, StyleSheet, Text, Button } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDispatch } from "react-redux";
-import { addCard, changeCardStatus, editCard } from "../store/myVocab";
+import { changeCurrentAction } from "../store/myVocab";
 import { Alert } from "react-native";
 import * as Haptics from "expo-haptics";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Platform } from "react-native";
-import { useSelector } from "react-redux";
 import landAppLogic from "../data/langAppLogic";
 import { useWindowDimensions } from "react-native";
 import { Card } from "../modal/card";
 import { insertCard } from "../data/database";
-import { editDbCard } from "../data/database";
-import { changeDbCardStatus } from "../data/database";
+import { editCard } from "../data/database";
+import { changeCardStatus, fetchCards } from "../data/database";
+import Animated, { ZoomIn, Easing } from "react-native-reanimated";
 
 function AddCardModal({ navigation, onSubmit, route }) {
   const { modalText, buttons, alerts } = landAppLogic();
+  const dispatch = useDispatch();
 
-  const savedDbId = route.params?.cardDbId;
+  //Fetching route params
+
   const savedWord = route.params?.cardWord;
   const savedtranslation = route.params?.cardTranslation;
   const savedId = route.params?.cardId;
@@ -27,12 +29,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
   const isPlaying = route.params?.isPlaying;
   const isAdding = route.params?.isAdding;
 
-  const words = useSelector((state) => state.cardReducer);
-
-  const [isDisabled, setIsDisabled] = useState(false);
-
-
-
+  // Setting Modal name:
 
   const translationLabel = () => {
     if (isEditing) {
@@ -48,18 +45,32 @@ function AddCardModal({ navigation, onSubmit, route }) {
   const [translation, setTranslation] = useState(translationLabel());
   const [isCorrect, setIsCorrect] = useState("default");
 
+  //Fetching cards from database:
+
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    async function loadCards() {
+      const dbCards = await fetchCards();
+      setCards(dbCards);
+      console.log(dbCards);
+    }
+    loadCards();
+  }, []);
+
+  //Styling adjustments:
+
   const extraPadding = Platform.OS === "android" ? 20 : 0;
   const { height } = useWindowDimensions();
   const adjustedHeight = Platform.OS === "android" ? height * 0.8 : 500;
 
-  const dispatch = useDispatch();
+  const [isDisabled, setIsDisabled] = useState(false);
 
-  async function addNewCard(){
-    const cardId = Math.random().toString() + "-" + word;
-    const newCard = { ...new Card(cardId, word, translation, false) }
-    console.log(newCard)
+  async function addNewCard() {
+    const newCard = { ...new Card(word.trim(), translation.trim(), "default") };
+    console.log(newCard);
     await insertCard(newCard);
-    dispatch(addCard(newCard));
+    dispatch(changeCurrentAction(`adding card ${word}-${translation}`));
   }
 
   //Validation part:
@@ -69,13 +80,15 @@ function AddCardModal({ navigation, onSubmit, route }) {
     translationInputIsValid: true,
   });
 
-  const upperCaseWord = word.charAt(0).toUpperCase() + word.slice(1);
-  const lowerCaseWord = word.charAt(0).toLowerCase() + word.slice(1);
+  const upperCaseWord = (word.charAt(0).toUpperCase() + word.slice(1)).trim();
+  const lowerCaseWord = (word.charAt(0).toLowerCase() + word.slice(1)).trim();
 
-  const upperCaseTranslation =
-    translation.charAt(0).toUpperCase() + translation.slice(1);
-  const lowerCaseTranslation =
-    translation.charAt(0).toLowerCase() + translation.slice(1);
+  const upperCaseTranslation = (
+    translation.charAt(0).toUpperCase() + translation.slice(1)
+  ).trim();
+  const lowerCaseTranslation = (
+    translation.charAt(0).toLowerCase() + translation.slice(1)
+  ).trim();
 
   const wordLabel = () => {
     if (isEditing) {
@@ -132,36 +145,35 @@ function AddCardModal({ navigation, onSubmit, route }) {
   function onSubmit() {
     validateInputs();
     if (isEditing && word && translation) {
-      editDbCard(word, translation, savedDbId)
+      editCard(word.trim(), translation.trim(), savedId);
       dispatch(
-        editCard({
-          cardId: savedId,
-          updatedWord: word,
-          updatedTranslation: translation,
-        })
+        changeCurrentAction(
+          `card with ${savedId} has changed to ${word}-${translation}`
+        )
       );
       onCancel();
     } else if (isPlaying) {
       if (
-        upperCaseTranslation === savedtranslation ||
-        lowerCaseTranslation === savedtranslation
+        upperCaseTranslation.trim() === savedtranslation ||
+        lowerCaseTranslation.trim() === savedtranslation
       ) {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         setIsCorrect("correct");
         setIsDisabled(true);
-        dispatch(changeCardStatus({ cardId: savedId, cardStatus: "correct" }));
-        changeDbCardStatus(savedId, "correct")
+        changeCardStatus(savedId, "correct");
+        dispatch(changeCurrentAction(`${savedId} is correct`));
+
         setTimeout(onCancel, 1500);
       } else if (translation === "") {
         return;
       } else {
         Alert.alert(alerts.wrongAnswer, alerts.wrongAnswer2);
         setIsCorrect("wrong");
-        dispatch(changeCardStatus({ cardId: savedId, cardStatus: "wrong" }));
-        changeDbCardStatus(savedId, "wrong")
+        changeCardStatus(savedId, "wrong");
+        dispatch(changeCurrentAction(`${savedId} is wrong`));
       }
     } else if (isAdding && word && translation) {
-      const checkIfExists = words.findIndex(
+      const checkIfExists = cards.findIndex(
         (element) =>
           (element.translation === upperCaseTranslation ||
             element.translation === lowerCaseTranslation) &&
@@ -172,7 +184,6 @@ function AddCardModal({ navigation, onSubmit, route }) {
       } else {
         addNewCard();
 
-        
         setWord(""), setTranslation("");
 
         onCancel();
@@ -220,38 +231,38 @@ function AddCardModal({ navigation, onSubmit, route }) {
             style={{
               flexDirection: "row",
               justifyContent: "flex-end",
+              alignItems: "center",
               width: "100%",
+              flex: 1,
+              paddingRight: 10,
             }}
           >
-            {/* {(isAdding || isEditing) && (
-              <AntDesign
-                name="infocirlceo"
-                size={30}
-                color="black"
-                style={{ opacity: 0.6, right: 15, top: 7 }}
-              />
-            )} */}
             {isPlaying && isCorrect === "correct" && (
-              <FontAwesome
-                name="check-circle"
-                borderColor="black"
-                size={50}
-                color="green"
-                style={{ top: "5%", right: "17%" }}
-              />
+              <Animated.View
+                entering={ZoomIn.springify().duration(400)}
+              >
+                <FontAwesome
+                  name="check-circle"
+                  borderColor="black"
+                  size={50}
+                  color="green"
+                />
+              </Animated.View>
             )}
             {isPlaying && isCorrect === "wrong" && translation && (
+              <Animated.View
+              entering={ZoomIn.springify().duration(400)}>
               <MaterialIcons
                 name="cancel"
                 size={50}
-                color="red"
-                style={{ top: "5%", right: "10%" }}
+                color="#ff3800"
               />
+              </Animated.View>
             )}
           </View>
           <View
             style={{
-              flex: 1,
+              flex: 3,
               width: "100%",
               justifyContent: "center",
               alignItems: "center",

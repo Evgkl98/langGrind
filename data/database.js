@@ -9,7 +9,6 @@ export function init() {
       tx.executeSql(
         `CREATE TABLE IF NOT EXISTS cards (
               id INTEGER PRIMARY KEY NOT NULL,
-              cardId TEXT NOT NULL,
               word TEXT NOT NULL,
               translation TEXT NOT NULL,
               cardStatus TEXT NOT NULL
@@ -33,8 +32,8 @@ export function insertCard(card) {
   const promise = new Promise((resolve, reject) => {
     database.transaction((tx) => {
       tx.executeSql(
-        `INSERT INTO cards (cardId, word, translation, cardStatus) VALUES (?, ?, ?, ?)`,
-        [card.cardId, card.word, card.translation, card.cardStatus],
+        `INSERT INTO cards (word, translation, cardStatus) VALUES (?, ?, ?)`,
+        [card.word, card.translation, card.cardStatus],
         (_, result) => {
           console.log(result);
           resolve(result);
@@ -89,7 +88,7 @@ export function deleteCard(cardId) {
   return promise;
 }
 
-export function editDbCard(cardWord, cardTranslation, cardId) {
+export function editCard(cardWord, cardTranslation, cardId) {
   const promise = new Promise((resolve, reject) => {
     database.transaction((tx) => {
       tx.executeSql(
@@ -108,11 +107,11 @@ export function editDbCard(cardWord, cardTranslation, cardId) {
   return promise;
 }
 
-export function changeDbCardStatus(cardId, newCardStatus) {
+export function changeCardStatus(cardId, newCardStatus) {
   const promise = new Promise((resolve, reject) => {
     database.transaction((tx) => {
       tx.executeSql(
-        "UPDATE cards SET cardStatus = ? WHERE cardId = ?",
+        "UPDATE cards SET cardStatus = ? WHERE id = ?",
         [newCardStatus, cardId],
         (_, result) => {
           resolve(result)

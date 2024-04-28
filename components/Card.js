@@ -1,16 +1,13 @@
-import { StyleSheet, Text, Pressable, View } from "react-native";
+import { StyleSheet, Text, Pressable, View, Platform } from "react-native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { useNavigation } from "@react-navigation/native";
 import Animated, {
   SlideInDown,
   SlideOutLeft,
 } from "react-native-reanimated";
-import { FontAwesome } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
-import { useRef, } from "react";
+import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { useRef } from "react";
 import { Easing } from "react-native-reanimated";
-import { Platform } from "react-native";
-
 import landAppLogic from "../data/langAppLogic";
 
 export default function Card({
@@ -19,8 +16,7 @@ export default function Card({
   cardWord,
   cardTranslation,
   onDelete,
-  cardStatus,
-  cardDbId
+  cardStatus
 }) {
   const { buttons } = landAppLogic();
   const navigation = useNavigation();
@@ -51,7 +47,6 @@ export default function Card({
       cardWord,
       cardTranslation,
       isEditing: true,
-      cardDbId
     });
   }
 
@@ -76,7 +71,7 @@ export default function Card({
       <Pressable
         style={[styles.box, { marginLeft: 25 }]}
         onPress={() => {
-          editCard(cardId, cardWord, cardTranslation, cardDbId);
+          editCard(cardId, cardWord, cardTranslation);
 
           setTimeout(() => swipeRef.current.close(), 1000);
         }}
@@ -123,7 +118,7 @@ export default function Card({
                 <FontAwesome name="check-circle" size={30} color="#4CBB17" />
               )}
               {cardStatus === "wrong" && (
-                <MaterialIcons name="cancel" size={30} color="red" />
+                <MaterialIcons name="cancel" size={30} color="#ff3800" />
               )}
             </View>
           </View>
