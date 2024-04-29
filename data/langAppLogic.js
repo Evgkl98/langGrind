@@ -42,7 +42,6 @@ export default function landAppLogic() {
         aboutSection: "About",
         feedbackSection: "Feedback",
       },
-      aboutText: {},
       languagesText: {
         languageTitle: "Language",
       },
@@ -107,7 +106,6 @@ export default function landAppLogic() {
         aboutSection: "Über die App",
         feedbackSection: "Feedback",
       },
-      aboutText: {},
       languagesText: {
         languageTitle: "Sprache",
       },
@@ -172,7 +170,6 @@ export default function landAppLogic() {
         aboutSection: "О приложении",
         feedbackSection: "Обратная связь",
       },
-      aboutText: {},
       languagesText: {
         languageTitle: "Язык",
       },

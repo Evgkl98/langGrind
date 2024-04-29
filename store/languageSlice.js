@@ -9,10 +9,10 @@ const appLanguageSlice = createSlice({
     changeAppLanguage: (state, action) => {
       switch (action.payload){
         case "English":
-        Alert.alert("Language changed", "You've successfully changed your language to English")
+        Alert.alert("App language was changed", "You've successfully changed your language to English")
         break
         case "Deutsch":
-        Alert.alert("Sprache geändert", "Die Anwendungssprache wurde auf Deutsch geändert")
+        Alert.alert("App-Sprache wurde geändert", "Die Anwendungssprache wurde auf Deutsch geändert")
         break
         case "Русский":
         Alert.alert("Смена языка", "Язык приложения был изменен на Русский")
