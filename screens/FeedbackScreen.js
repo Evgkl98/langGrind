@@ -1,10 +1,4 @@
-import {
-  Text,
-  SafeAreaView,
-  View,
-  TextInput,
-  Alert,
-} from "react-native";
+import { Text, SafeAreaView, View, TextInput, Alert } from "react-native";
 import { StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import CustomHeader from "../components/CustomHeader";
@@ -13,8 +7,10 @@ import { Dimensions } from "react-native";
 import { MotiPressable } from "moti/interactions";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useMemo } from "react";
+import { onSubmit } from "../data/submit";
 
 
 export default function FeedbackScreen({ navigation }) {
@@ -23,18 +19,24 @@ export default function FeedbackScreen({ navigation }) {
   const windowHeight = Dimensions.get("window").height;
 
   const languageIs = useSelector((state) => state.languageReducer);
-  console.log(languageIs)
-  const titleFont = languageIs === "Русский" || languageIs === "Deutsch" ? 25 : 30
-
+  
+  const titleFont = useMemo(() => {
+    return languageIs === "Русский" || languageIs === "Deutsch" ? 25 : 30;
+  }, [languageIs]);
 
   const [message, setMessage] = useState("");
 
+
   function sendMessage() {
-    if (message === ""){
-      return Alert.alert(alerts.feedbackEmptyTitle, alerts.feedbackEmptyComment)
+    if (message === "") {
+      return Alert.alert(
+        alerts.feedbackEmptyTitle,
+        alerts.feedbackEmptyComment
+      );
     } else {
-      Alert.alert(alerts.feedbackEmptySent)
-      setTimeout(goBack, 1000)
+      onSubmit(message)
+      Alert.alert(alerts.feedbackSent);
+      setTimeout(goBack, 1000);
     }
   }
 
@@ -56,10 +58,7 @@ export default function FeedbackScreen({ navigation }) {
       >
         <View style={[styles.container, { height: windowHeight * 0.95 }]}>
           <View style={{ flex: 1, paddingBottom: 5 }}>
-            <CustomHeader
-              onBack={goBack}
-              buttonColor="black"
-            />
+            <CustomHeader onBack={goBack} buttonColor="black" />
           </View>
 
           <View style={styles.content}>
@@ -72,7 +71,13 @@ export default function FeedbackScreen({ navigation }) {
                 alignItems: "center",
               }}
             >
-              <Text style={{ fontFamily: "Inter-Black", fontSize: titleFont, textAlign: "center" }}>
+              <Text
+                style={{
+                  fontFamily: "Inter-Black",
+                  fontSize: titleFont,
+                  textAlign: "center",
+                }}
+              >
                 {feedbackText.title}
               </Text>
               <Text

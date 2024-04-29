@@ -57,9 +57,9 @@ export default function landAppLogic() {
         wrongAnswer2: "Oops... Try once again!",
         cardExists: "Card already exists",
         cardExists2: "Try to add another card",
-        feedBackSent: "Thank you for your feedback!",
-        feedBackEmptyTitle: "Empty input field",
-        feedBackEmptyComment: "Please check your feedback message",
+        feedbackSent: "Thank you for your feedback!",
+        feedbackEmptyTitle: "Empty input field",
+        feedbackEmptyComment: "Please check your feedback message",
       },
       feedbackText: {
         title: "Tell me something :)",
