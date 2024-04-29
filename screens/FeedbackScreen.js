@@ -13,21 +13,27 @@ import { Dimensions } from "react-native";
 import { MotiPressable } from "moti/interactions";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useSelector } from "react-redux";
 
 
 export default function FeedbackScreen({ navigation }) {
-  const { settingsText } = landAppLogic();
+  const { feedbackText, alerts } = landAppLogic();
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
+
+  const languageIs = useSelector((state) => state.languageReducer);
+  console.log(languageIs)
+  const titleFont = languageIs === "Русский" || languageIs === "Deutsch" ? 25 : 30
+
 
   const [message, setMessage] = useState("");
 
   function sendMessage() {
     if (message === ""){
-      return Alert.alert("Empty input field", "Please check your feedback message")
+      return Alert.alert(alerts.feedbackEmptyTitle, alerts.feedbackEmptyComment)
     } else {
-      Alert.alert("Thank you for your feedback")
+      Alert.alert(alerts.feedbackEmptySent)
       setTimeout(goBack, 1000)
     }
   }
@@ -53,7 +59,6 @@ export default function FeedbackScreen({ navigation }) {
             <CustomHeader
               onBack={goBack}
               buttonColor="black"
-              // headerTitle="Give Feedback"
             />
           </View>
 
@@ -67,8 +72,8 @@ export default function FeedbackScreen({ navigation }) {
                 alignItems: "center",
               }}
             >
-              <Text style={{ fontFamily: "Inter-Black", fontSize: 30 }}>
-                Tell me something {":)"}
+              <Text style={{ fontFamily: "Inter-Black", fontSize: titleFont, textAlign: "center" }}>
+                {feedbackText.title}
               </Text>
               <Text
                 style={{
@@ -77,8 +82,7 @@ export default function FeedbackScreen({ navigation }) {
                   textAlign: "center",
                 }}
               >
-                Here you can freely write about bugs, improvements and your
-                ideas.
+                {feedbackText.comment}
               </Text>
             </View>
             <View
@@ -99,7 +103,7 @@ export default function FeedbackScreen({ navigation }) {
                 onChangeText={(text) => setMessage(text)}
                 multiline
                 textAlignVertical="top"
-                placeholder="Write about your experience with app..."
+                placeholder={feedbackText.placeholder}
                 style={{
                   fontFamily: "Inter-Light",
                   fontSize: 15,
@@ -132,7 +136,7 @@ export default function FeedbackScreen({ navigation }) {
                     textAlign: "center",
                   }}
                 >
-                  Send feedback
+                  {feedbackText.button}
                 </Text>
               </MotiPressable>
             </View>

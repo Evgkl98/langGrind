@@ -14,7 +14,7 @@ export default function StartScreen({ navigation }) {
     setTimeout(() => {
       setCubeScale(20);
       setTimeout(() => {
-        navigation.navigate("ChooseExercise");
+        navigation.navigate("ChooseSection");
       }, 700);
     }, 3000);
   }, []);

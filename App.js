@@ -1,7 +1,6 @@
 import StartScreen from "./screens/StartScreen";
-import ChooseExercise from "./screens/ChooseExercise";
+import ChooseSection from "./screens/ChooseSection";
 import SettingsScreen from "./screens/SettingsScreen";
-import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CardGameStart from "./screens/CardGameStart";
@@ -15,24 +14,28 @@ import AboutScreen from "./screens/AboutScreen";
 import FeedbackScreen from "./screens/FeedbackScreen";
 import { Platform } from "react-native";
 import { useEffect, useState, useCallback } from "react";
-import * as SplashScreen from "expo-splash-screen"
+import * as SplashScreen from "expo-splash-screen";
 import { init } from "./data/database";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor } from "./store/store";
+import { Text } from "react-native";
 
 const Stack = createNativeStackNavigator();
-SplashScreen.preventAutoHideAsync()
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-
   const [dbInitialized, setDbInitialized] = useState(false);
 
   useEffect(() => {
-    init().then(() => {
-      setDbInitialized(true)
-      console.log("Success");
-    }).catch((err)=> {
-      console.log(err);
-    });
-  },[])
+    init()
+      .then(() => {
+        setDbInitialized(true);
+        console.log("Success");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const onLayoutRootView = useCallback(async () => {
     if (dbInitialized) {
@@ -44,18 +47,18 @@ export default function App() {
     return null;
   }
 
-  const modalAnimation = Platform.OS === "android" ? "slide_from_bottom" : "default"
+  const modalAnimation =
+    Platform.OS === "android" ? "slide_from_bottom" : "default";
 
   return (
-    <>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <Provider store={store} >
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
           <NavigationContainer>
             <Stack.Navigator
               initialRouteName="StartScreen"
               onLayout={onLayoutRootView}
               screenOptions={{
-                // animationDuration: "300",
                 headerShown: false,
               }}
             >
@@ -65,8 +68,8 @@ export default function App() {
                 options={{ headerShown: false }}
               />
               <Stack.Screen
-                name="ChooseExercise"
-                component={ChooseExercise}
+                name="ChooseSection"
+                component={ChooseSection}
                 options={{ gestureEnabled: false, animation: "fade" }}
               />
               <Stack.Screen
@@ -123,8 +126,8 @@ export default function App() {
               />
             </Stack.Navigator>
           </NavigationContainer>
-        </Provider>
-      </GestureHandlerRootView>
-    </>
+        </PersistGate>
+      </Provider>
+    </GestureHandlerRootView>
   );
 }

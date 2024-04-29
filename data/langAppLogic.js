@@ -13,7 +13,8 @@ export default function landAppLogic() {
       },
       gameStartText: {
         title: "How to play?",
-        subtitle: "Tap on a card and translate the word on it. Swipe right to edit the word. Swipe left to delete the card.",
+        subtitle:
+          "Tap on a card and translate the word on it. Swipe right to edit the word. Swipe left to delete the card.",
       },
       buttons: {
         backButton: "Back",
@@ -56,15 +57,84 @@ export default function landAppLogic() {
         wrongAnswer2: "Oops... Try once again!",
         cardExists: "Card already exists",
         cardExists2: "Try to add another card",
+        feedBackSent: "Thank you for your feedback!",
+        feedBackEmptyTitle: "Empty input field",
+        feedBackEmptyComment: "Please check your feedback message",
+      },
+      feedbackText: {
+        title: "Tell me something :)",
+        comment:
+          "Here you can freely write about bugs, improvements and your ideas",
+        placeholder: "Write about your experience with this app",
+        button: "Send feedback",
       },
     },
     Deutsch: {
-      firstSection: "Karten",
-      secondSection: "Übersetzer",
-      secondSectionSoon: "Kommt bald...",
-      thirdSection: "Einstellung",
+      sectionsText: {
+        firstSection: "Karten",
+        secondSection: "Übersetzer",
+        secondSectionSoon: "Kommt bald...",
+        thirdSection: "Einstellung",
+      },
+      gameStartText: {
+        title: "Wie spielen?",
+        subtitle:
+          "Drücken Sie auf die Karte und übersetzen Sie das Wort. Um das Wort zu bearbeiten, wischen Sie die Karte nach rechts. Um zu löschen - wischen Sie nach links.",
+      },
+      buttons: {
+        backButton: "Zurück",
+        addButton: "Hinzufügen",
+        cancelButton: "Abbrechen",
+        confirmButton: "Bestätigen",
+        editButton: "Bearbeiten",
+        deleteButton: "Löschen",
+      },
+      gameText: {
+        noCards: "Keine Karten vorhanden",
+      },
+      modalText: {
+        newCard: "Neue Karte",
+        editCard: "Karte bearbeiten",
+        playCard: "Übersetzen Sie das Wort",
+        wordPlaceholder: "Wort",
+        translationPlaceholder: "Übersetzung",
+      },
+      settingsText: {
+        settingsTitle: "Einstellungen",
+        preferencesTitle: "Einstellungen",
+        helpTitle: "Hilfe",
+        languageSection: "App-Sprache",
+        aboutSection: "Über die App",
+        feedbackSection: "Feedback",
+      },
+      aboutText: {},
+      languagesText: {
+        languageTitle: "Sprache",
+      },
+      alerts: {
+        noTextAndTranslation: "Leere Felder",
+        noTextAndTranslation2:
+          "Bitte geben Sie ein Wort und seine Übersetzung ein",
+        noWord: "Leeres Feld",
+        noWord2: "Bitte geben Sie ein Wort ein",
+        noTranslation: "Leeres Feld",
+        noTranslation2: "Bitte geben Sie die Übersetzung des Wortes ein",
+        wrongAnswer: "Falsch!",
+        wrongAnswer2: "Falsche Übersetzung. Bitte versuchen Sie es erneut.",
+        cardExists: "Diese Karte existiert bereits",
+        cardExists2: "Versuchen Sie eine neue zu erstellen",
+        feedbackSent: "Vielen Dank für Ihr Feedback!",
+        feedbackEmptyTitle: "Leeres Feld",
+        feedbackEmptyComment: "Bitte schreiben Sie Ihr Feedback",
+      },
+      feedbackText: {
+        title: "Erzählen Sie mir etwas :)",
+        comment: "Hier können Sie frei über Fehler, Verbesserungen und Ihre Ideen schreiben",
+        placeholder: "Schreiben Sie über Ihre Erfahrung mit der App...",
+        button: "Feedback senden"
+      }
     },
-    Russian: {
+    Русский: {
       sectionsText: {
         firstSection: "Карточки",
         secondSection: "Переводчик",
@@ -117,9 +187,19 @@ export default function landAppLogic() {
         wrongAnswer2: "Неверный перевод. Попробуйте еще раз.",
         cardExists: "Такая карточка уже существует",
         cardExists2: "Попробуйте создать новую",
+        feedbackSent: "Спасибо за ваш отзыв!",
+        feedbackEmptyTitle: "Пустое поле",
+        feedbackEmptyComment: "Пожалуйста напишите свой отзыв",
+      },
+      feedbackText: {
+        title: "Напишите что-нибудь :)",
+        comment:
+          "Здесь вы можете свободно оставить свой отзыв, сообщить об ошибках или написать о том, что бы вы улучшили в приложении",
+        placeholder: "Расскажите о своем опыте использования приложения",
+        button: "Отправить отзыв",
       },
     },
-    Czech: {
+    Český: {
       sectionsText: {
         firstSection: "Karty",
         secondSection: "Překladač",
@@ -128,7 +208,8 @@ export default function landAppLogic() {
       },
       gameStartText: {
         title: "Jak na to?",
-        subtitle: "Tapněte kartu a přeložtě slovo. Posunem vrpavo upravtě obsah karty. Posunem vlevo ji odstraňte.",
+        subtitle:
+          "Tapněte kartu a přeložtě slovo. Posunem vrpavo upravtě obsah karty. Posunem vlevo ji odstraňte.",
       },
       buttons: {
         backButton: "Zpátky",
@@ -170,6 +251,16 @@ export default function landAppLogic() {
         wrongAnswer2: "Překlad není spravný. Zkustě ještě jednou.",
         cardExists: "Tato karta už existuje",
         cardExists2: "Zkustě vytvořit jinou.",
+        feedbackSent: "Děkuji za zpětnou vazbu!",
+        feedbackEmptyTitle: "Prazdné pole",
+        feedbackEmptyComment: "Prosím, napiště svůj feedback",
+      },
+      feedbackText: {
+        title: "Napiště něco :)",
+        comment:
+          "Zde můžete napsát o chybách, vylepšeních a svých nápadech",
+          placeholder: "Napište o svých zkušenostech s aplikací...",
+          button: "Odeslat zpětnou vazbu"
       },
     },
   };

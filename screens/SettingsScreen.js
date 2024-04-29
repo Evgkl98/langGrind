@@ -10,7 +10,7 @@ export default function SettingsScreen({ navigation }) {
   const { settingsText } = landAppLogic();
 
   function goBack() {
-    navigation.navigate("ChooseExercise");
+    navigation.navigate("ChooseSection");
   }
   function setAppLanguage() {
     navigation.navigate("SetLanguageScreen");

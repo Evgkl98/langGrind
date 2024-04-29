@@ -30,8 +30,8 @@ export default function SetLanguageScreen({ navigation }) {
   const appLanguages = [
     { id: "1", language: "English" },
     { id: "2", language: "Deutsch" },
-    { id: "3", language: "Russian" },
-    { id: "4", language: "Czech" },
+    { id: "3", language: "Русский" },
+    { id: "4", language: "Český" },
   ];
 
 

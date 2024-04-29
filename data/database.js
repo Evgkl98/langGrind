@@ -1,5 +1,4 @@
 import * as SQLite from "expo-sqlite";
-import { Card } from "../modal/card";
 
 const database = SQLite.openDatabase("cards.db");
 

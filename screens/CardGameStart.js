@@ -13,7 +13,7 @@ export default function CardGameStart({ navigation }) {
   const {gameStartText} = landAppLogic()
 
   function goBack() {
-    navigation.navigate("ChooseExercise");
+    navigation.navigate("ChooseSection");
   }
   function goToCardGame(){
     navigation.navigate("CardGame")

@@ -12,17 +12,18 @@ const appLanguageSlice = createSlice({
         Alert.alert("Language changed", "You've successfully changed your language to English")
         break
         case "Deutsch":
-        Alert.alert("Sprache geändert", "Die Anwendungssprache wurde auf Russisch geändert")
+        Alert.alert("Sprache geändert", "Die Anwendungssprache wurde auf Deutsch geändert")
         break
-        case "Russian":
+        case "Русский":
         Alert.alert("Смена языка", "Язык приложения был изменен на Русский")
         break
-        case "Czech":
+        case "Český":
         Alert.alert("Změna jazyku", "Jazyk aplikace byl změněn na Český")
         break
       }
         return action.payload
-    }
+    },
+    
   },
 });
 

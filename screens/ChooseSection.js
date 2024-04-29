@@ -2,17 +2,15 @@ import { Text, View, StyleSheet, SafeAreaView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { MotiPressable } from "moti/interactions";
 import { MotiView } from "moti";
-import { useWindowDimensions } from "react-native";
+
 
 // Language imports:
 import landAppLogic from "../data/langAppLogic";
-import { useSelector } from "react-redux";
 
 
-export default function ChooseExercise({ navigation }) {
+
+export default function ChooseSection({ navigation }) {
   const { sectionsText } = landAppLogic();
-
-  const language = useSelector((state) => state.languageReducer);
 
   function goToCards() {
     navigation.navigate("CardGameStart");
@@ -21,7 +19,6 @@ export default function ChooseExercise({ navigation }) {
     navigation.navigate("SettingsScreen");
   }
 
-  const {width, height} = useWindowDimensions()
 
 
   return (
