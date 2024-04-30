@@ -12,7 +12,6 @@
     
     <img src="https://github.com/Evgkl98/langGrind/blob/workBranch/demo/menu.PNG" width="315" height="550">
     <img src = "https://github.com/Evgkl98/langGrind/blob/workBranch/demo/demo.gif" width="315" height="550">
-    <img src="https://github.com/Evgkl98/langGrind/blob/workBranch/demo/languages.PNG" width="315" height="550">
     
 ## Features
 
