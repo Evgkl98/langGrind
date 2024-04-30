@@ -18,22 +18,24 @@ import * as SplashScreen from "expo-splash-screen";
 import { init } from "./data/database";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "./store/store";
-import { Text } from "react-native";
+
+
+SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
-SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [dbInitialized, setDbInitialized] = useState(false);
+
 
   useEffect(() => {
     init()
       .then(() => {
         setDbInitialized(true);
-        console.log("Success");
+        // console.log("Success");
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
 

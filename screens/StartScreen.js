@@ -1,6 +1,5 @@
 import { StyleSheet, View } from "react-native";
 import { MotiView, MotiText } from "moti";
-import { MotiPressable } from "moti/interactions";
 import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -40,29 +39,26 @@ export default function StartScreen({ navigation }) {
       <StatusBar hidden />
       <View style={styles.container}>
         <MotiText
+          from={{ scale: 0 }}
+          animate={{ scale: 1 }}
           style={{ fontFamily: "Inter-Black", fontSize: 40 }}
           onLayout={onLayoutReview}
         >
           LangGrind
         </MotiText>
-        <MotiPressable /*onPress={handleScale}*/>
+        <MotiView from={{ scale: 0 }}
+          animate={{ scale: 1 }}>
           <MotiView
             style={styles.cubic}
             from={{ scale: cubeScale }}
             transition={{ duration: 2300, stiffness: 100 }}
           ></MotiView>
-        </MotiPressable>
+        </MotiView>
         <MotiView
           style={styles.cubic}
           from={{ scale: 0 }}
           animate={{
-            rotate: [
-              "0deg",
-              "90deg",
-              "180deg",
-              "270deg",
-              "0deg",
-            ],
+            rotate: ["0deg", "90deg", "180deg", "270deg", "0deg"],
             scale: 1,
           }}
           transition={{

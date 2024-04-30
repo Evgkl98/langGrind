@@ -3,14 +3,11 @@ import {
   SafeAreaView,
   StyleSheet,
   View,
-  Text,
-  Alert,
+  Text
 } from "react-native";
 import { useDispatch } from "react-redux";
 import CustomHeader from "../components/CustomHeader";
 import { changeAppLanguage } from "../store/languageSlice";
-import { useSelector } from "react-redux";
-
 import { Dimensions } from "react-native";
 import { MotiPressable } from "moti/interactions";
 import landAppLogic from "../data/langAppLogic";
@@ -18,9 +15,8 @@ import landAppLogic from "../data/langAppLogic";
 
 
 export default function SetLanguageScreen({ navigation }) {
-  const languageIs = useSelector((state) => state.languageReducer);
 
-  const { languagesText, alerts } = landAppLogic();
+  const { languagesText } = landAppLogic();
 
 
   function changeLanguage (lang) {
@@ -66,12 +62,6 @@ export default function SetLanguageScreen({ navigation }) {
                       scale: pressed ? 0.85 : 1,
                     };
                   }}
-                  // onPress={() => {
-                  //   setTimeout(() => {
-                  //     dispatch(changeAppLanguage(itemData.item.language));
-                  //   }, 400);
-                  //   setTimeout(changeAlert, 1000); //schedules with rendering
-                  // }}
                   onPress={() => changeLanguage(itemData.item.language)}
                 >
                   <Text
@@ -103,13 +93,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingBottom: "30%",
-    borderTopWidth: 1,
-    // backgroundColor: "grey",
+    borderTopWidth: 1
   },
   langCard: {
     backgroundColor: "#0000FF",
     borderRadius: 20,
     marginTop: 20,
-    padding: 15,
+    padding: 15
   },
 });

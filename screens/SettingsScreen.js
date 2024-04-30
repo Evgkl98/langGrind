@@ -47,8 +47,7 @@ export default function SettingsScreen({ navigation }) {
                   fontSize: 23,
                   color: "black",
                   paddingHorizontal: 20,
-                  paddingVertical: 10,
-                  // textDecorationLine: "underline"
+                  paddingVertical: 10
                 }}
               >
                 {settingsText.preferencesTitle}
@@ -81,8 +80,7 @@ export default function SettingsScreen({ navigation }) {
                   fontSize: 23,
                   color: "black",
                   paddingHorizontal: 20,
-                  paddingVertical: 10,
-                  // textDecorationLine: "underline"
+                  paddingVertical: 10
                 }}
               >
                 {settingsText.helpTitle}

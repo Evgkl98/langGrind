@@ -9,7 +9,9 @@
     "backgroundColor": "#ffd700",
     "splash": {
       "image": "./assets/splashscreen.png",
-      "resizeMode": "contain"
+      "resizeMode": "contain",
+      "backgroundColor": "#ffd700"
+      
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {

@@ -21,9 +21,6 @@ function CardGame({ navigation }) {
 
   const currentStatus = useSelector((state) => state.cardReducer);
 
-  const animateItems =
-    Platform.OS === "ios" ? LinearTransition.springify() : null;
-
   function goBack() {
     navigation.navigate("CardGameStart");
   }
@@ -32,17 +29,19 @@ function CardGame({ navigation }) {
   }
   const dispatch = useDispatch();
 
-
   // Fetching data from database:
 
   useEffect(() => {
     async function loadCards() {
       const dbCards = await fetchCards();
       setCards(dbCards);
-      console.log(dbCards);
     }
     loadCards();
   }, [currentStatus]);
+
+
+
+
 
   return (
     <>
@@ -73,7 +72,7 @@ function CardGame({ navigation }) {
             ) : (
               <>
                 <Animated.FlatList
-                  itemLayoutAnimation={animateItems}
+                  itemLayoutAnimation={Platform.OS === "ios" ? LinearTransition.springify() : null}
                   exiting={SlideOutLeft.duration(300)
                     .easing(Easing.ease)
                     .springify()
@@ -91,7 +90,11 @@ function CardGame({ navigation }) {
                         cardStatus={itemData.item.cardStatus}
                         onDelete={() => {
                           deleteCard(itemData.item.id);
-                          dispatch(changeCurrentAction(`deleting item: ${itemData.item.id}`))
+                          dispatch(
+                            changeCurrentAction(
+                              `deleting item: ${itemData.item.id}`
+                            )
+                          );
                         }}
                       >
                         {itemData.item.word}
@@ -124,7 +127,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
     marginBottom: 20,
-    width: "100%",
+    width: "100%"
   },
 });
 

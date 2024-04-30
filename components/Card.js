@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import Animated, {
   SlideInDown,
   SlideOutLeft,
+  ZoomIn,
 } from "react-native-reanimated";
 import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 import { useRef } from "react";
@@ -16,21 +17,12 @@ export default function Card({
   cardWord,
   cardTranslation,
   onDelete,
-  cardStatus
+  cardStatus,
 }) {
   const { buttons } = landAppLogic();
   const navigation = useNavigation();
   const swipeRef = useRef();
 
-  const enteringAnimation =
-    Platform.OS === "ios"
-      ? SlideInDown.easing(Easing.ease).springify().mass(0.4)
-      : null;
-
-  const exitingAnimation =
-    Platform.OS === "ios"
-      ? SlideOutLeft.duration(300).easing(Easing.ease).springify()
-      : null;
 
   function playGame() {
     navigation.navigate("AddCardModal", {
@@ -80,7 +72,7 @@ export default function Card({
           style={{
             fontFamily: "Inter-Light",
             fontSize: 20,
-            color: "black", //"#007AFF" ??
+            color: "black",
           }}
         >
           {buttons.editButton}
@@ -90,7 +82,18 @@ export default function Card({
   };
 
   return (
-    <Animated.View entering={enteringAnimation} exiting={exitingAnimation}>
+    <Animated.View
+      entering={
+        Platform.OS === "ios"
+          ? SlideInDown.easing(Easing.ease).springify().mass(0.4)
+          : ZoomIn.easing(Easing.ease).springify().mass(0.4)
+      }
+      exiting={
+        Platform.OS === "ios"
+          ? SlideOutLeft.duration(300).easing(Easing.ease).springify()
+          : null
+      }
+    >
       <Swipeable
         renderRightActions={deleteBox}
         renderLeftActions={editBox}
@@ -107,7 +110,7 @@ export default function Card({
                   fontSize: 23,
                   margin: 19,
                   color: "#ffd700",
-                  textAlign: "auto"
+                  textAlign: "auto",
                 }}
               >
                 {children}

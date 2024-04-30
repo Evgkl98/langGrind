@@ -14,9 +14,9 @@ import { Card } from "../modal/card";
 import { insertCard } from "../data/database";
 import { editCard } from "../data/database";
 import { changeCardStatus, fetchCards } from "../data/database";
-import Animated, { ZoomIn, Easing } from "react-native-reanimated";
+import Animated, { ZoomIn } from "react-native-reanimated";
 
-function AddCardModal({ navigation, onSubmit, route }) {
+function AddCardModal({ navigation, route }) {
   const { modalText, buttons, alerts } = landAppLogic();
   const dispatch = useDispatch();
 
@@ -53,7 +53,6 @@ function AddCardModal({ navigation, onSubmit, route }) {
     async function loadCards() {
       const dbCards = await fetchCards();
       setCards(dbCards);
-      console.log(dbCards);
     }
     loadCards();
   }, []);
@@ -68,10 +67,13 @@ function AddCardModal({ navigation, onSubmit, route }) {
 
   async function addNewCard() {
     const newCard = { ...new Card(word.trim(), translation.trim(), "default") };
-    console.log(newCard);
     await insertCard(newCard);
     dispatch(changeCurrentAction(`adding card ${word}-${translation}`));
   }
+
+
+
+
 
   //Validation part:
 
@@ -198,8 +200,6 @@ function AddCardModal({ navigation, onSubmit, route }) {
         backgroundColor: styles.container.backgroundColor,
         paddingTop: extraPadding,
       }}
-      // resetScrollToCoords={{ x: 0, y: 0 }}
-      // contentContainerStyle={{marginBottom: "auto", marginTop: "auto"}}
     >
       <View style={styles.container}>
         <View
@@ -238,6 +238,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
             }}
           >
             {isPlaying && isCorrect === "correct" && (
+              <View>
               <Animated.View
                 entering={ZoomIn.springify().duration(400)}
               >
@@ -248,8 +249,10 @@ function AddCardModal({ navigation, onSubmit, route }) {
                   color="green"
                 />
               </Animated.View>
+              </View>
             )}
             {isPlaying && isCorrect === "wrong" && translation && (
+              <View>
               <Animated.View
               entering={ZoomIn.springify().duration(400)}>
               <MaterialIcons
@@ -258,6 +261,7 @@ function AddCardModal({ navigation, onSubmit, route }) {
                 color="#ff3800"
               />
               </Animated.View>
+              </View>
             )}
           </View>
           <View

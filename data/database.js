@@ -15,11 +15,11 @@ export function init() {
         [],
         () => {
           resolve();
-        }, //callback for success
+        }, //success
 
         (_, error) => {
           reject(error);
-        } //callback for error
+        } //error
       );
     });
   });
@@ -34,11 +34,9 @@ export function insertCard(card) {
         `INSERT INTO cards (word, translation, cardStatus) VALUES (?, ?, ?)`,
         [card.word, card.translation, card.cardStatus],
         (_, result) => {
-          console.log(result);
           resolve(result);
         },
         (_, err) => {
-          console.log(err);
           reject(err);
         }
       );
@@ -55,7 +53,6 @@ export function fetchCards() {
         "SELECT * FROM cards",
         [],
         (_, result) => {
-          console.log(resolve);
           resolve(result.rows._array);
         },
         (_, error) => {
@@ -76,7 +73,6 @@ export function deleteCard(cardId) {
         [cardId],
         (_, result) => {
           resolve(result)
-          console.log(resolve)
         },
         (_, error) => {
           reject(error)
@@ -95,7 +91,6 @@ export function editCard(cardWord, cardTranslation, cardId) {
         [cardWord, cardTranslation, cardId],
         (_, result) => {
           resolve(result)
-          console.log(resolve)
         },
         (_, error) => {
           reject(error)
@@ -114,7 +109,6 @@ export function changeCardStatus(cardId, newCardStatus) {
         [newCardStatus, cardId],
         (_, result) => {
           resolve(result)
-          console.log(resolve)
         },
         (_, error) => {
           reject(error)

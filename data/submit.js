@@ -1,5 +1,5 @@
 import { send, EmailJSResponseStatus } from "@emailjs/react-native";
-import { public_data } from "./keys";
+import { public_data } from "../publicData";
 
 export const onSubmit = async (message) => {
   try {
