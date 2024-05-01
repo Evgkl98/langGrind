@@ -1,5 +1,6 @@
 # LangGrind
- React Native App for memorizing new foreign words. My first React Native App.
+
+ React Native simple App for memorizing new foreign words. 
  
 ## Built with
 - 🚩 ***General***: React Native, Redux-toolkit (incl. Redux Persist)
@@ -8,38 +9,40 @@
 
 ## Design
 
-  - The user interface design as the App name is unique
+  - The user interface design as the name of the App are unique
     
     <img src="https://github.com/Evgkl98/langGrind/blob/workBranch/demo/menu.PNG" width="315" height="550">
     <img src = "https://github.com/Evgkl98/langGrind/blob/workBranch/demo/demo.gif" width="315" height="550">
     
 ## Features
 
-- Basic **CRUD** operations:
+- Basic **CRUD** actions:
     
   - **Create** cards with words and their translations
-  - **Read** the content of the card, translate thr word and check yourself
-  - **Update** the word or its translation by swiping the card right
-  - **Delete** card by swiping the card left
+  - **Read** the content of the card, translate the word and check yourself
+  - **Update** the word or its translation by swiping the card to the right
+  - **Delete** card by swiping the card to the left
   
     
 - User Friendly Validation:
 
   - Prevents to create cards with identical content
   - Empty input fields validation
-  - Accept uppercase/lowercase first letter of input value
-
+  - Accepts uppercase/lowercase first letter of the input value
 
 - Extra:
   - Card marking
   - User can choose one of four languages for the app (the language list will be expanded in the future)
   - Feedback feature directly in the app
+
+## Project Management
+
+- The whole depeloping process was maintained by [Jira](https://www.atlassian.com/software/jira)
  
-- More:
+## Addition
   
-At the first version of the app, the set of features is primitive. With the next versions the app will contain:
+At the first version of the app, the set of features is primitive. With the next versions the app will contain such features as:
 
   - Integrated translator
   - Folders, sorting, language info and more and more ...
-
 
