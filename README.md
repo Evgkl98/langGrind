@@ -16,8 +16,7 @@
     
 ## Features
 
--  Basic **CRUD** actions:
-    
+- Basic **CRUD** actions: 
   - **Create** cards with words and their translations
   - **Read** the content of the card, translate the word and check yourself
   - **Update** the word or its translation by swiping the card to the right
@@ -41,7 +40,7 @@
  
 ## Addition
   
-At the first version of the app, the set of features is primitive. With the next versions the app will contain such features as:
+In the first version of the app, the set of features is primitive. With the next versions the app will contain such features as:
 
   - Integrated translator
   - Folders, sorting, language info and more and more ...
