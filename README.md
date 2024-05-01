@@ -7,6 +7,9 @@
 - 🎞 ***Animation***: Reanimated 3, Moti, Swipable by react-native-gesture-handler
 - 🗂 ***Data Management***: SQLite
 
+## Demo
+Take a look at the demo.mp4 file in repo to see the all features
+
 ## Platforms
 
 - 🛠 Android and iOS
