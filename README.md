@@ -9,14 +9,14 @@
 
 ## Design
 
-  - The user interface design as the name of the App are unique
+  - 🖼 The user interface design as the name of the App are unique
     
     <img src="https://github.com/Evgkl98/langGrind/blob/workBranch/demo/menu.PNG" width="315" height="550">
     <img src = "https://github.com/Evgkl98/langGrind/blob/workBranch/demo/demo.gif" width="315" height="550">
     
 ## Features
 
-- Basic **CRUD** actions:
+-  Basic **CRUD** actions:
     
   - **Create** cards with words and their translations
   - **Read** the content of the card, translate the word and check yourself
