@@ -25,16 +25,29 @@ export default function FeedbackScreen({ navigation }) {
   }, [languageIs]);
 
   const [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
 
 
   function sendMessage() {
-    if (message === "") {
+    if(message === "" && email === ""){
+      return Alert.alert(
+        alerts.noTextAndTranslation,
+        alerts.feedbackNoValuesComment
+      )
+    }
+    else if (message === "") {
       return Alert.alert(
         alerts.feedbackEmptyTitle,
         alerts.feedbackEmptyComment
-      );
+      )
+    }
+      else if(email === ""){
+        return Alert.alert(
+          alerts.feedbackEmptyTitle,
+          alerts.feedbackNoEmail
+        )
     } else {
-      onSubmit(message)
+      onSubmit(message, email)
       Alert.alert(alerts.feedbackSent);
       setTimeout(goBack, 1000);
     }
@@ -101,8 +114,9 @@ export default function FeedbackScreen({ navigation }) {
             >
               <MaterialCommunityIcons
                 name="email-edit-outline"
-                size={100}
+                size={90}
                 color="black"
+                style={{marginBottom: 10}}
               />
               <TextInput
                 onChangeText={(text) => setMessage(text)}
@@ -115,6 +129,25 @@ export default function FeedbackScreen({ navigation }) {
                   borderWidth: 1,
                   width: windowWidth * 0.85,
                   height: "50%",
+                  borderRadius: 10,
+                  paddingHorizontal: 10,
+                  paddingTop: 10,
+                  paddingBottom: 10,
+                  marginBottom: 10,
+                }}
+              ></TextInput>
+              <TextInput
+                onChangeText={(text) => setEmail(text)}
+                maxLength={40}
+                textAlignVertical="top"
+                keyboardType="email-address"
+                placeholder={feedbackText.placeholderEmail}
+                style={{
+                  fontFamily: "Inter-Light",
+                  fontSize: 15,
+                  borderWidth: 1,
+                  width: windowWidth * 0.85,
+                  height: "10%",
                   borderRadius: 10,
                   paddingHorizontal: 10,
                   paddingTop: 10,

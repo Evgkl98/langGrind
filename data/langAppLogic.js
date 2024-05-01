@@ -59,6 +59,8 @@ export default function landAppLogic() {
         feedbackSent: "Thank you for your feedback!",
         feedbackEmptyTitle: "Empty input field",
         feedbackEmptyComment: "Please check your feedback message",
+        feedbackNoEmail: "Please write your e-mail",
+        feedbackNoValuesComment: "Please write your feedback message and your e-mail"
       },
       feedbackText: {
         title: "Tell me something :)",
@@ -66,6 +68,7 @@ export default function landAppLogic() {
           "Here you can freely write about bugs, improvements and your ideas",
         placeholder: "Write about your experience with this app",
         button: "Send feedback",
+        placeholderEmail: "Your e-mail"
       },
     },
     Deutsch: {
@@ -124,12 +127,15 @@ export default function landAppLogic() {
         feedbackSent: "Vielen Dank für Ihr Feedback!",
         feedbackEmptyTitle: "Leeres Feld",
         feedbackEmptyComment: "Bitte schreiben Sie Ihr Feedback",
+        feedbackNoEmail: "Bitte schreiben Sie Ihre E-Mail",
+        feedbackNoValuesComment: "Bitte schreiben Sie Ihre Feedback und Ihre E-Mail-Adresse"
       },
       feedbackText: {
         title: "Erzählen Sie mir etwas :)",
         comment: "Hier können Sie frei über Fehler, Verbesserungen und Ihre Ideen schreiben",
         placeholder: "Schreiben Sie über Ihre Erfahrung mit der App...",
-        button: "Feedback senden"
+        button: "Feedback senden",
+        placeholderEmail: "Ihre E-mail Adresse"
       }
     },
     Русский: {
@@ -187,6 +193,8 @@ export default function landAppLogic() {
         feedbackSent: "Спасибо за ваш отзыв!",
         feedbackEmptyTitle: "Пустое поле",
         feedbackEmptyComment: "Пожалуйста напишите свой отзыв",
+        feedbackNoEmail: "Пожалуйста оставьте ваш e-mail",
+        feedbackNoValuesComment: "Пожалуйста заполните все поля"
       },
       feedbackText: {
         title: "Напишите что-нибудь :)",
@@ -194,6 +202,7 @@ export default function landAppLogic() {
           "Здесь вы можете свободно оставить свой отзыв, сообщить об ошибках или написать о том, что бы вы улучшили в приложении",
         placeholder: "Расскажите о своем опыте использования приложения",
         button: "Отправить отзыв",
+        placeholderEmail: "Ваш e-mail"
       },
     },
     Český: {
@@ -250,14 +259,18 @@ export default function landAppLogic() {
         cardExists2: "Zkustě vytvořit jinou.",
         feedbackSent: "Děkuji za zpětnou vazbu!",
         feedbackEmptyTitle: "Prazdné pole",
-        feedbackEmptyComment: "Prosím, napiště svůj feedback",
+        feedbackEmptyComment: "Prosím, napiště svou zprávu",
+        feedbackNoEmail: "Prosím, napiště svůj e-mail",
+        feedbackNoValuesComment: "Prosím, napiště svůj e-mail a svou zprávu"
       },
       feedbackText: {
         title: "Napiště něco :)",
         comment:
-          "Zde můžete napsát o chybách, vylepšeních a svých nápadech",
+          "Zde můžete napsát o chybách, vylepšeních a o svých nápadech",
           placeholder: "Napište o svých zkušenostech s aplikací...",
-          button: "Odeslat zpětnou vazbu"
+          button: "Odeslat zpětnou vazbu",
+          placeholderEmail: "Váš e-mail"
+          
       },
     },
   };

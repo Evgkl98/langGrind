@@ -1,7 +1,7 @@
 import { send, EmailJSResponseStatus } from "@emailjs/react-native";
 import { public_data } from "../publicData";
 
-export const onSubmit = async (message) => {
+export const onSubmit = async (message, email) => {
   try {
     await send(
       public_data.service_id,
@@ -10,6 +10,7 @@ export const onSubmit = async (message) => {
         to_name: public_data.to_name,
         to_email: public_data.to_email,
         from_name: public_data.from_name,
+        from_email: email,
         message,
       },
       {
