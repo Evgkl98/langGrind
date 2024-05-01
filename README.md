@@ -1,6 +1,6 @@
 # LangGrind
 
- React Native simple App for memorizing new foreign words. 
+ **React Native simple App for memorizing new foreign words** 
  
 ## Built with
 - 🚩 ***General***: React Native, Expo, Redux-toolkit (incl. Redux Persist)
