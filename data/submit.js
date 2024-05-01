@@ -1,28 +1,32 @@
-import { send, EmailJSResponseStatus } from "@emailjs/react-native";
-import { public_data } from "../publicData";
+// --- Feedback mailing is provided by EmailJS ---
+// --- To use this code, create file publicData and add your own cridentials from EmailJS account ---
 
-export const onSubmit = async (message, email) => {
-  try {
-    await send(
-      public_data.service_id,
-      public_data.template_id,
-      {
-        to_name: public_data.to_name,
-        to_email: public_data.to_email,
-        from_name: public_data.from_name,
-        from_email: email,
-        message,
-      },
-      {
-        publicKey: public_data.public_key,
-      }
-    );
+// import { send, EmailJSResponseStatus } from "@emailjs/react-native";
+// import { public_data } from "../publicData";
 
-    console.log("SUCCESS!");
-  } catch (err) {
-    if (err instanceof EmailJSResponseStatus) {
-      console.log("EmailJS Request Failed...", err);
-    }
-    console.log("ERROR", err);
-  }
-};
+// export const onSubmit = async (message, email) => {
+//   try {
+//     await send(
+//       public_data.service_id,
+//       public_data.template_id,
+//       {
+//         to_name: public_data.to_name,
+//         to_email: public_data.to_email,
+//         from_name: public_data.from_name,
+//         from_email: email,
+//         message,
+//       },
+//       {
+//         publicKey: public_data.public_key,
+//       }
+//     );
+
+//     console.log("SUCCESS!");
+//   } catch (err) {
+//     if (err instanceof EmailJSResponseStatus) {
+//       console.log("EmailJS Request Failed...", err);
+//     }
+//     console.log("ERROR", err);
+//   }
+// };
+
