@@ -48,7 +48,7 @@
  
 ## Addition
   
-In the first version of the app, the set of features is primitive. With the next versions the app will contain such features as:
+It is the first version of the app, the set of features is now primitive. The project is still under development. With the next versions the app will contain such features as:
 
   - Integrated translator
   - Folders, sorting, language info and more and more ...
