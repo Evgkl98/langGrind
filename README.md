@@ -3,9 +3,13 @@
  React Native simple App for memorizing new foreign words. 
  
 ## Built with
-- 🚩 ***General***: React Native, Redux-toolkit (incl. Redux Persist)
+- 🚩 ***General***: React Native, Expo, Redux-toolkit (incl. Redux Persist)
 - 🎞 ***Animation***: Reanimated 3, Moti, Swipable by react-native-gesture-handler
 - 🗂 ***Data Management***: SQLite
+
+## Platforms
+
+- 🛠 Android and iOS
 
 ## Design
 
@@ -34,9 +38,10 @@
   - User can choose one of four languages for the app (the language list will be expanded in the future)
   - Feedback feature directly in the app
 
+
 ## Project Management
 
-- The whole depeloping process was maintained by [Jira](https://www.atlassian.com/software/jira)
+- The whole depeloping process (tasks and progress tracking) was maintained by [Jira](https://www.atlassian.com/software/jira)
  
 ## Addition
   
