@@ -8,7 +8,7 @@
 - 🗂 ***Data Management***: SQLite
 
 ## Demo
-- Take a look at the demo.mp4 file in repo to see the all features
+- Check out this [video](https://youtu.be/n94lElQCwK0) to see all features of the app
 
 ## Platforms
 
