@@ -37,7 +37,7 @@
   - Accepts uppercase/lowercase first letter of the input value
 
 - Extra:
-  - Card marking
+  - Feedback to user after writing correct or incorrect answer
   - User can choose one of four languages for the app (the language list will be expanded in the future)
   - Feedback feature directly in the app
 
