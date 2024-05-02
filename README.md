@@ -10,6 +10,31 @@
 ## Demo
 - Check out this [video](https://youtu.be/n94lElQCwK0) to see all features of the app
 
+## Launch Locally 
+
+To launch project locally you need:
+
+- Node.js
+- A device with installed Expo Go app or Android/iOS simulator
+
+### Instalation
+
+1. Clone this repository
+   
+   `git clone https://github.com/Evgkl98/langGrind.git`
+   
+2. Navigate to the project folder
+
+   `cd langGrind`
+   
+3. Install dependencies
+
+   `npm install`
+
+5. Start project
+
+   `npm start` 
+
 ## Platforms
 
 - 🛠 Android and iOS
