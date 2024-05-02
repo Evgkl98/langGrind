@@ -19,21 +19,17 @@ To launch project locally you need:
 
 ### Instalation
 
-1. Clone this repository
-   
-   `git clone https://github.com/Evgkl98/langGrind.git`
-   
+1. Clone this repository and open in your IDE  
 2. Navigate to the project folder
-
-   `cd langGrind`
-   
 3. Install dependencies
 
    `npm install`
 
-5. Start project
-
-   `npm start` 
+4. Start project
+   
+   `npm start`
+   
+5. Follow the instructions in the terminal (scan QR code or start simulator)
 
 ## Platforms
 
