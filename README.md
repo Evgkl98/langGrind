@@ -37,7 +37,7 @@ To launch project locally you need:
 
 ## Design
 
-  - 🖼 The user interface design as the name of the App are unique, but partly inspired by Langenscheidt Dictionary (https://en.langenscheidt.com/)
+  - 🖼 The user interface design as the name of the App are unique, but partly inspired by [Langenscheidt Dictionary](https://en.langenscheidt.com/)
     
     <img src="https://github.com/Evgkl98/langGrind/blob/workBranch/demo/menu.PNG" width="315" height="550">
     <img src = "https://github.com/Evgkl98/langGrind/blob/workBranch/demo/demo.gif" width="315" height="550">
