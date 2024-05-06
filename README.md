@@ -8,7 +8,7 @@
 - 🗂 ***Data Management***: SQLite
 
 ## Demo
-- Check out this [video](https://youtu.be/n94lElQCwK0) to see all features of the app
+- Check out this [video](https://www.youtube.com/watch?v=8i9twAs2W1Y) to see all features of the app
 
 ## Launch Locally 
 
