@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "LangGrind",
+    "slug": "LangGrind",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#ffd700",
+    "splash": {
+      "image": "./assets/splashscreen.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffd700"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "buildNumber": "1.0.0",
+      "bundleIdentifier": "com.langgrind"
+    },
+    "android": {
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffd700"
+      },
+      "package": "com.langgrind"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "35801d0a-8d73-4bbb-b5d2-7592e61de557"
+      }
+    }
+  }
+}
