@@ -73,4 +73,5 @@ It is the first version of the app, the set of features is now primitive. The pr
 
   - Integrated translator
   - Folders, sorting, language info and more and more ...
+  - User Authentication
 
