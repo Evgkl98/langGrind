@@ -18,6 +18,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { init } from "./data/database";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "./store/store";
+// import AuthScreen from "./screens/AuthScreen";
+import TranslatorScreen from "./screens/TranslatorScreen";
 
 
 SplashScreen.preventAutoHideAsync();
@@ -69,10 +71,20 @@ export default function App() {
                 component={StartScreen}
                 options={{ headerShown: false, animation: "default", presentation: Platform.OS === "android" ? "modal" : null }}
               />
+              {/* <Stack.Screen
+                name="AuthScreen"
+                component={AuthScreen}
+                options={{ headerShown: false, animation: "fade", presentation: Platform.OS === "android" ? "transparentModal" : null }}
+              /> */}
               <Stack.Screen
                 name="ChooseSection"
                 component={ChooseSection}
-                options={{ gestureEnabled: false, animation: "fade", presentation: Platform.OS === "android" ? "transparentModal" : null }}
+                options={{ gestureEnabled: false, animation: "fade" }}
+              />
+              <Stack.Screen
+                name="TranslatorScreen"
+                component={TranslatorScreen}
+                options={{ gestureEnabled: false, animation: "default" }}
               />
               <Stack.Screen
                 name="CardGameStart"

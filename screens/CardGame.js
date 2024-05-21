@@ -39,10 +39,6 @@ function CardGame({ navigation }) {
     loadCards();
   }, [currentStatus]);
 
-
-
-
-
   return (
     <>
       <SafeAreaView style={styles.safeArea}>

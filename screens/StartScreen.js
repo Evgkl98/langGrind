@@ -16,6 +16,7 @@ export default function StartScreen({ navigation }) {
       setCubeScale(20);
       setTimeout(() => {
         navigation.navigate("ChooseSection");
+        // navigation.navigate("AuthScreen")
       }, 700);
     }, 3000);
   }, []);
@@ -24,6 +25,20 @@ export default function StartScreen({ navigation }) {
     "Inter-Black": require("../assets/fonts/Inter-Black.ttf"),
     "Inter-Light": require("../assets/fonts/Inter-Light.ttf"),
     "Inter-Regular": require("../assets/fonts/Inter-Regular.ttf"),
+    "Inter-Bold": require("../assets/fonts/Inter-Bold.ttf"),
+    "Inter-BoldItalic": require("../assets/fonts/Inter-BoldItalic.ttf"),
+    "Inter-ExtraBold": require("../assets/fonts/Inter-ExtraBold.ttf"),
+    "Inter-ExtraBoldItalic": require("../assets/fonts/Inter-ExtraBoldItalic.ttf"),
+    "Inter-ExtraLight": require("../assets/fonts/Inter-ExtraLight.ttf"),
+    "Inter-ExtraLightItalic": require("../assets/fonts/Inter-ExtraLightItalic.ttf"),
+    "Inter-Italic": require("../assets/fonts/Inter-Italic.ttf"),
+    "Inter-LightItalic": require("../assets/fonts/Inter-LightItalic.ttf"),
+    "Inter-Medium": require("../assets/fonts/Inter-Medium.ttf"),
+    "Inter-SemiBold": require("../assets/fonts/Inter-SemiBold.ttf"),
+    "Inter-MediumItalic": require("../assets/fonts/Inter-MediumItalic.ttf"),
+    "Inter-SemiBoldItalic": require("../assets/fonts/Inter-SemiBoldItalic.ttf"),
+    "Inter-Thin.ttf": require("../assets/fonts/Inter-Thin.ttf"),
+    "Inter-ThinItalic": require("../assets/fonts/Inter-ThinItalic.ttf")
   });
 
   const onLayoutReview = useCallback(async () => {

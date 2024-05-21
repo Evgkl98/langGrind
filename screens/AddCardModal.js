@@ -237,8 +237,9 @@ function AddCardModal({ navigation, route }) {
               paddingRight: 10,
             }}
           >
-            {isPlaying && isCorrect === "correct" && (
-              <View>
+            
+              <View style={{height: "65%", width: "15%", justifyContent: "center", alignItems: "center"}}>
+              {isPlaying && isCorrect === "correct" && (
               <Animated.View
                 entering={ZoomIn.springify().duration(400)}
               >
@@ -249,8 +250,9 @@ function AddCardModal({ navigation, route }) {
                   color="green"
                 />
               </Animated.View>
+              )}
               </View>
-            )}
+            
             {isPlaying && isCorrect === "wrong" && translation && (
               <View>
               <Animated.View

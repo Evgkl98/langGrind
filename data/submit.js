@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 // Feedback mailing is provided by EmailJS
 // To use this code, create file publicData and add your own cridentials from EmailJS account:
@@ -31,7 +30,7 @@
 //     console.log("ERROR", err);
 //   }
 // };
-=======
+
 // --- Feedback mailing is provided by EmailJS ---
 // --- To use this code, create file publicData and add your own cridentials from EmailJS account ---
 
@@ -63,5 +62,3 @@
 //     console.log("ERROR", err);
 //   }
 // };
-
->>>>>>> c0c1e3b23b86613c9a52984d4d164ba737f13c29
