@@ -39,7 +39,7 @@ To launch project locally you need:
 
   - 🖼 The user interface design as the name of the App are unique, but partly inspired by [Langenscheidt Dictionary](https://en.langenscheidt.com/)
     
-    <img src="https://github.com/Evgkl98/langGrind/blob/workingBranch/demo/menu.PNG" width="315" height="550">
+    <img src="https://github.com/Evgkl98/langGrind/blob/workingBranch/demo/MenuDemo.jpg" width="315" height="550">
     <img src = "https://github.com/Evgkl98/langGrind/blob/workingBranch/demo/demo.gif" width="315" height="550">
     
 ## Features
@@ -54,8 +54,9 @@ To launch project locally you need:
   - Powered by **Google Cloud Translation** and **Merriam-Webster API's**
   - Supports several languages for translating
   - Returns meaning of the word, part of speech and audio pronunciation
- 
-  <img src = "https://github.com/Evgkl98/langGrind/blob/workingBranch/demo/TranslatorDemo.gif" width="315" height="550">
+  <br>
+      <img src = "https://github.com/Evgkl98/langGrind/blob/workingBranch/demo/TranslatorDemo.gif" width="315" height="550">
+      <img src = "https://github.com/Evgkl98/langGrind/blob/workingBranch/demo/SettingsScreen.jpg" width="315" height="550">
  
 - User Friendly Validation:
 
