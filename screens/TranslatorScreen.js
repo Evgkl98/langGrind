@@ -4,33 +4,46 @@ import {
   View,
   TextInput,
   useWindowDimensions,
+  Alert,
 } from "react-native";
+
 import { StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { FontAwesome5 } from "@expo/vector-icons";
 import CustomHeader from "../components/CustomHeader";
-import landAppLogic from "../data/langAppLogic";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { MotiPressable } from "moti/interactions";
+import { translateWord } from "../google_translator_api";
+import { iso_lang_codes } from "../ISO_lang_codes";
+import { Modal } from "react-native";
+import Loading from "root/components/Loading";
+import { findWord } from "root/dictionary_api";
+import landAppLogic from "../data/langAppLogic";
+import NetInfo from "@react-native-community/netinfo";
 
 export default function TranslatorScreen({ navigation }) {
-  const { gameStartText } = landAppLogic();
+  //Check internet connection:
+
+  const [netState, setNetState] = useState(true);
+  useEffect(() => {
+    NetInfo.fetch().then((state) => {
+      state.isConnected ? setNetState(true) : setNetState(false);
+      console.log("Is connected?", state.isConnected);
+    });
+  }, []);
+
+  console.log(netState);
 
   const [word, setWord] = useState("");
-  const [language, setLanguage] = useState("");
+  const [language, setLanguage] = useState("English");
+  const [isLoading, setIsLoading] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
-  const dataLanguages = [
-    { key: "1", value: "English" },
-    { key: "2", value: "German" },
-    { key: "3", value: "French" },
-    { key: "4", value: "Italian" },
-    { key: "5", value: "Russian" },
-    { key: "6", value: "Czech" },
-    { key: "7", value: "Spanish" },
-  ];
+  const { modalText, buttons, alerts } = landAppLogic();
 
   function goBack() {
     navigation.navigate("ChooseSection");
@@ -38,12 +51,71 @@ export default function TranslatorScreen({ navigation }) {
   // function goToCardGame() {
   //   navigation.navigate("CardGame");
   // }
-  function sendRequest() {
-    return null;
+
+  function goToWord(
+    requestedWord,
+    receivedResult,
+    meanings,
+    partOfSpeech,
+    audioFile,
+    audioPathStatus,
+    verbForms
+  ) {
+    navigation.navigate("WordMeaningScreen", {
+      word: requestedWord,
+      translation: receivedResult,
+      meanings: meanings,
+      partOfSpeech,
+      audioFile,
+      audioPathStatus,
+      verbForms,
+    });
   }
 
-  console.log(language);
-  console.log(word);
+  // goToWord(word, result, meanings, partOfSpeech);
+  // Google API Translation - for translation
+  // Merriam-Webster - for meaning
+
+  const sendRequest = async () => {
+    if (word.trim() === "") {
+      Alert.alert(alerts.noWord, alerts.noWord2);
+    } else {
+      try {
+        setIsLoading(true);
+        const result = await translateWord(word, "en"); // just translates to Eng
+        const formattedResult = result.toLowerCase().replace("to ", "");
+        const dictResponse = await findWord(formattedResult); // receive all JSON data
+
+        if (!dictResponse.meanings || !dictResponse.partOfSpeech) {
+          // Handle case where word is not found
+          setIsLoading(false);
+          Alert.alert(
+            "Word is not found",
+            "Sorry, the word is not found in the dictionary."
+          );
+          return;
+        }
+        const meanings = dictResponse.meanings;
+        const partOfSpeech = dictResponse.partOfSpeech;
+        const audioUrl = dictResponse.audioUrl;
+        const audioPathStatus = dictResponse.audioPathStatus;
+        const verbForms = dictResponse.verbForms;
+
+        setIsLoading(false);
+        goToWord(
+          word,
+          result,
+          meanings,
+          partOfSpeech,
+          audioUrl,
+          audioPathStatus,
+          verbForms
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   const { windowHeight, windowWidth } = useWindowDimensions();
 
@@ -57,12 +129,24 @@ export default function TranslatorScreen({ navigation }) {
         ]}
       >
         <View style={styles.container}>
-          <View style={{ flex: 1, borderBottomWidth: 1, borderColor: "black" }}>
+          <View style={{ flex: 1, borderColor: "black" }}>
             <CustomHeader buttonColor="black" onBack={goBack} />
           </View>
 
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={isLoading}
+            // onRequestClose={() => {
+            //   setModalVisible(false);
+            // }}
+          >
+            <Loading />
+          </Modal>
+
           <View style={styles.content}>
             <KeyboardAwareScrollView
+              scrollEnabled={isFocused}
               contentContainerStyle={{
                 flex: 1,
                 flexDirection: "column",
@@ -70,130 +154,120 @@ export default function TranslatorScreen({ navigation }) {
                 alignItems: "center",
               }}
             >
-              <View style={styles.title}>
-                <Text
-                  style={{
-                    fontFamily: "Inter-Black",
-                    fontSize: 40,
-                    color: "black",
-                  }}
-                >
-                  Translator
-                </Text>
-                <View style={{ width: "90%" }}>
+              <View style={styles.firstInner}>
+                <View style={styles.title}>
                   <Text
                     style={{
-                      fontFamily: "Inter-Light",
-                      fontSize: 20,
+                      fontFamily: "Inter-Black",
+                      fontSize: 40,
+                      color: "black",
+                    }}
+                  >
+                    Translator
+                  </Text>
+                  <View style={{ width: "90%" }}>
+                    <Text
+                      style={{
+                        fontFamily: "Inter-Light",
+                        fontSize: 20,
+                        color: "black",
+                        textAlign: "center",
+                      }}
+                    >
+                      Not sure what the word means? Write your word below, press
+                      the button and get the meaning of the word
+                    </Text>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    width: "100%",
+                    flexDirection: "row",
+                    justifyContent: "space-evenly",
+                    alignItems: "center",
+                  }}
+                >
+                  <AntDesign name="search1" size={42} color="black" />
+                  <FontAwesome name="language" size={46} color="black" />
+                  <FontAwesome name="globe" size={46} color="black" />
+                  <FontAwesome5 name="book-open" size={46} color="black" />
+                  <FontAwesome5 name="book" size={46} color="black" />
+                  {/* 66 - size */}
+                </View>
+              </View>
+              <View style={styles.secondInner}>
+                <View
+                  style={[
+                    styles.inputFields,
+                    { flexDirection: "column", justifyContent: "flex-end" },
+                  ]}
+                >
+                  <Text
+                    style={{
+                      fontFamily: "Inter-Bold",
+                      fontSize: 22,
                       color: "black",
                       textAlign: "center",
                     }}
                   >
-                    Not sure what the word means? Write your word below, choose
-                    the language and get the meaning of the word
+                    Your word:
                   </Text>
+                  <View>
+                    <TextInput
+                      style={[
+                        styles.inputStyle,
+                        {
+                          fontSize: 20,
+                          marginTop: 14,
+                          marginBottom: 22,
+                          fontFamily: "Inter-Light",
+                        },
+                        //   !inputsValidation.wordInputIsValid && styles.invalidInput,
+                      ]}
+                      onChangeText={(text) => setWord(text)}
+                      onFocus={() => setIsFocused(true)}
+                      onBlur={() => setIsFocused(false)}
+                      autoCorrect={false}
+                      keyboardType="default"
+                      placeholder="Cat (for example)"
+                      maxLength={30}
+                      textAlignVertical="top"
+                      textAlign="left"
+                    />
+                  </View>
                 </View>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                  width: "100%",
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                }}
-              >
-                <AntDesign name="search1" size={42} color="black" />
-                <FontAwesome name="language" size={46} color="black" />
-                <FontAwesome name="globe" size={46} color="black" />
-                <FontAwesome5 name="book-open" size={46} color="black" />
-                <FontAwesome5 name="book" size={46} color="black" />
-                {/* 66 - size */}
-              </View>
-              <View style={styles.inputFields}>
-                <Text
+                <View
                   style={{
-                    fontFamily: "Inter-Regular",
-                    fontSize: 22,
-                    color: "black",
-                    textAlign: "center",
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: 20,
                   }}
                 >
-                  Your word:
-                </Text>
-                <View>
-                  <TextInput
-                    style={[
-                      styles.inputStyle,
-                      { fontSize: 20 },
-                      //   !inputsValidation.wordInputIsValid && styles.invalidInput,
-                    ]}
-                    onChangeText={(text) => setWord(text)}
-                    autoCorrect={false}
-                    keyboardType="default"
-                    placeholder="Cat (for example)"
-                    maxLength={30}
-                    textAlignVertical="top"
-                    textAlign="left"
-                  />
-                </View>
-                <Text
-                  style={{
-                    fontFamily: "Inter-Regular",
-                    fontSize: 22,
-                    color: "black",
-                    textAlign: "center",
-                  }}
-                >
-                  Translate to
-                </Text>
-                <View style={{ minWidth: "100%" }}>
-                  <TextInput
-                    onChangeText={(lang) => setLanguage(lang)}
-                    style={[
-                      styles.inputStyle,
-                      { fontSize: 20 },
-                      //   !inputsValidation.wordInputIsValid && styles.invalidInput,
-                    ]}
-                    autoCorrect={false}
-                    keyboardType="default"
-                    placeholder="Language"
-                    maxLength={30}
-                    textAlignVertical="top"
-                    textAlign="left"
-                  />
-                </View>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginBottom: 20,
-                }}
-              >
-                <MotiPressable
-                  onPress={sendRequest}
-                  style={[styles.button]}
-                  from={{ scale: 1 }}
-                  animate={({ pressed }) => {
-                    "worklet";
-                    return {
-                      scale: pressed ? 0.85 : 1,
-                    };
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontFamily: "Inter-Regular",
-                      fontSize: 23,
-                      color: "#ffd700",
-                      textAlign: "center",
+                  <MotiPressable
+                    onPress={sendRequest}
+                    style={[styles.button]}
+                    from={{ scale: 1 }}
+                    animate={({ pressed }) => {
+                      "worklet";
+                      return {
+                        scale: pressed ? 0.85 : 1,
+                      };
                     }}
                   >
-                    Search
-                  </Text>
-                </MotiPressable>
+                    <Text
+                      style={{
+                        fontFamily: "Inter-Regular",
+                        fontSize: 22,
+                        color: "#ffd700",
+                        textAlign: "center",
+                      }}
+                    >
+                      Search
+                    </Text>
+                  </MotiPressable>
+                </View>
               </View>
             </KeyboardAwareScrollView>
           </View>
@@ -210,10 +284,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffd700",
   },
   content: {
-    flex: 10,
-    // flexDirection: "column",
-    // justifyContent: "center",
-    // alignItems: "center",
+    flex: 11,
   },
   title: {
     flex: 3,
@@ -221,8 +292,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
   },
-  inputFields: {
+  firstInner: {
     flex: 3,
+    width: "95%",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  secondInner: {
+    flex: 2,
+    width: "100%",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  inputFields: {
+    flex: 2,
     width: "85%",
     flexDirection: "column",
     justifyContent: "space-evenly",
@@ -242,5 +326,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     minWidth: "85%",
     paddingVertical: 14,
+  },
+  pressed: {
+    opacity: 0.5,
   },
 });

@@ -9,8 +9,9 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useMemo } from "react";
+import { useMemo, Suspense } from "react";
 import { onSubmit } from "../data/submit";
+import Loading from "root/components/Loading";
 
 
 export default function FeedbackScreen({ navigation }) {
@@ -19,7 +20,7 @@ export default function FeedbackScreen({ navigation }) {
   const windowHeight = Dimensions.get("window").height;
 
   const languageIs = useSelector((state) => state.languageReducer);
-  
+
   const titleFont = useMemo(() => {
     return languageIs === "Русский" || languageIs === "Deutsch" ? 25 : 30;
   }, [languageIs]);
@@ -27,27 +28,21 @@ export default function FeedbackScreen({ navigation }) {
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
 
-
   function sendMessage() {
-    if(message === "" && email === ""){
+    if (message === "" && email === "") {
       return Alert.alert(
         alerts.noTextAndTranslation,
         alerts.feedbackNoValuesComment
-      )
-    }
-    else if (message === "") {
+      );
+    } else if (message === "") {
       return Alert.alert(
         alerts.feedbackEmptyTitle,
         alerts.feedbackEmptyComment
-      )
-    }
-      else if(email === ""){
-        return Alert.alert(
-          alerts.feedbackEmptyTitle,
-          alerts.feedbackNoEmail
-        )
+      );
+    } else if (email === "") {
+      return Alert.alert(alerts.feedbackEmptyTitle, alerts.feedbackNoEmail);
     } else {
-      // onSubmit(message, email) - sending user's feedback
+      onSubmit(message, email)
       Alert.alert(alerts.feedbackSent);
       setTimeout(goBack, 1000);
     }
@@ -58,130 +53,132 @@ export default function FeedbackScreen({ navigation }) {
   }
 
   return (
-    <KeyboardAwareScrollView
-      style={{ backgroundColor: styles.container.backgroundColor }}
-      resetScrollToCoords={{ x: 0, y: 0 }}
-    >
-      <StatusBar style="dark" />
-      <SafeAreaView
-        style={[
-          styles.safeArea,
-          { backgroundColor: styles.container.backgroundColor },
-        ]}
+    <Suspense fallback={<Loading />}>
+      <KeyboardAwareScrollView
+        style={{ backgroundColor: styles.container.backgroundColor }}
+        resetScrollToCoords={{ x: 0, y: 0 }}
       >
-        <View style={[styles.container, { height: windowHeight * 0.95 }]}>
-          <View style={{ flex: 1, paddingBottom: 5 }}>
-            <CustomHeader onBack={goBack} buttonColor="black" />
-          </View>
-
-          <View style={styles.content}>
-            <View
-              style={{
-                flex: 1,
-                width: windowWidth * 0.85,
-                flexDirection: "column",
-                justifyContent: "space-evenly",
-                alignItems: "center",
-              }}
-            >
-              <Text
-                style={{
-                  fontFamily: "Inter-Black",
-                  fontSize: titleFont,
-                  textAlign: "center",
-                }}
-              >
-                {feedbackText.title}
-              </Text>
-              <Text
-                style={{
-                  fontFamily: "Inter-Light",
-                  fontSize: 15,
-                  textAlign: "center",
-                }}
-              >
-                {feedbackText.comment}
-              </Text>
+        <StatusBar style="dark" />
+        <SafeAreaView
+          style={[
+            styles.safeArea,
+            { backgroundColor: styles.container.backgroundColor },
+          ]}
+        >
+          <View style={[styles.container, { height: windowHeight * 0.95 }]}>
+            <View style={{ flex: 1, paddingBottom: 5 }}>
+              <CustomHeader onBack={goBack} buttonColor="black" />
             </View>
-            <View
-              style={{
-                flex: 4,
-                flexDirection: "column",
-                justifyContent: "space-around",
-                alignItems: "center",
-                paddingBottom: 25,
-              }}
-            >
-              <MaterialCommunityIcons
-                name="email-edit-outline"
-                size={90}
-                color="black"
-                style={{marginBottom: 10}}
-              />
-              <TextInput
-                onChangeText={(text) => setMessage(text)}
-                multiline
-                textAlignVertical="top"
-                placeholder={feedbackText.placeholder}
+
+            <View style={styles.content}>
+              <View
                 style={{
-                  fontFamily: "Inter-Light",
-                  fontSize: 15,
-                  borderWidth: 1,
+                  flex: 1,
                   width: windowWidth * 0.85,
-                  height: "50%",
-                  borderRadius: 10,
-                  paddingHorizontal: 10,
-                  paddingTop: 10,
-                  paddingBottom: 10,
-                  marginBottom: 10,
-                }}
-              ></TextInput>
-              <TextInput
-                onChangeText={(text) => setEmail(text)}
-                maxLength={40}
-                textAlignVertical="top"
-                keyboardType="email-address"
-                placeholder={feedbackText.placeholderEmail}
-                style={{
-                  fontFamily: "Inter-Light",
-                  fontSize: 15,
-                  borderWidth: 1,
-                  width: windowWidth * 0.85,
-                  height: "10%",
-                  borderRadius: 10,
-                  paddingHorizontal: 10,
-                  paddingTop: 10,
-                  paddingBottom: 10,
-                  marginBottom: 10,
-                }}
-              ></TextInput>
-              <MotiPressable
-                onPress={sendMessage}
-                style={[styles.cardSection, { width: windowWidth * 0.85 }]}
-                from={{ scale: 1 }}
-                animate={({ pressed }) => {
-                  "worklet";
-                  return {
-                    scale: pressed ? 0.85 : 1,
-                  };
+                  flexDirection: "column",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
                 }}
               >
                 <Text
                   style={{
-                    fontFamily: "Inter-Regular",
-                    fontSize: 23,
-                    color: "#ffd700",
+                    fontFamily: "Inter-Black",
+                    fontSize: titleFont,
                     textAlign: "center",
                   }}
                 >
-                  {feedbackText.button}
+                  {feedbackText.title}
                 </Text>
-              </MotiPressable>
+                <Text
+                  style={{
+                    fontFamily: "Inter-Light",
+                    fontSize: 15,
+                    textAlign: "center",
+                  }}
+                >
+                  {feedbackText.comment}
+                </Text>
+              </View>
+              <View
+                style={{
+                  flex: 4,
+                  flexDirection: "column",
+                  justifyContent: "space-around",
+                  alignItems: "center",
+                  paddingBottom: 25,
+                }}
+              >
+                <MaterialCommunityIcons
+                  name="email-edit-outline"
+                  size={90}
+                  color="black"
+                  style={{ marginBottom: 10 }}
+                />
+                <TextInput
+                  onChangeText={(text) => setMessage(text)}
+                  multiline
+                  textAlignVertical="top"
+                  placeholder={feedbackText.placeholder}
+                  style={{
+                    fontFamily: "Inter-Light",
+                    fontSize: 15,
+                    borderWidth: 1,
+                    width: windowWidth * 0.85,
+                    height: "50%",
+                    borderRadius: 10,
+                    paddingHorizontal: 10,
+                    paddingTop: 10,
+                    paddingBottom: 10,
+                    marginBottom: 10,
+                  }}
+                ></TextInput>
+                <TextInput
+                  onChangeText={(text) => setEmail(text)}
+                  maxLength={40}
+                  textAlignVertical="top"
+                  keyboardType="email-address"
+                  placeholder={feedbackText.placeholderEmail}
+                  style={{
+                    fontFamily: "Inter-Light",
+                    fontSize: 15,
+                    borderWidth: 1,
+                    width: windowWidth * 0.85,
+                    height: "10%",
+                    borderRadius: 10,
+                    paddingHorizontal: 10,
+                    paddingTop: 10,
+                    paddingBottom: 10,
+                    marginBottom: 10,
+                  }}
+                ></TextInput>
+                <MotiPressable
+                  onPress={sendMessage}
+                  style={[styles.cardSection, { width: windowWidth * 0.85 }]}
+                  from={{ scale: 1 }}
+                  animate={({ pressed }) => {
+                    "worklet";
+                    return {
+                      scale: pressed ? 0.85 : 1,
+                    };
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: "Inter-Regular",
+                      fontSize: 23,
+                      color: "#ffd700",
+                      textAlign: "center",
+                    }}
+                  >
+                    {feedbackText.button}
+                  </Text>
+                </MotiPressable>
+              </View>
             </View>
           </View>
-        </View>
-      </SafeAreaView>
-    </KeyboardAwareScrollView>
+        </SafeAreaView>
+      </KeyboardAwareScrollView>
+    </Suspense>
   );
 }
 

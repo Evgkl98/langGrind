@@ -14,7 +14,9 @@ import { Card } from "../modal/card";
 import { insertCard } from "../data/database";
 import { editCard } from "../data/database";
 import { changeCardStatus, fetchCards } from "../data/database";
-import Animated, { ZoomIn } from "react-native-reanimated";
+import Animated, { ZoomIn } from "react-native-reanimated";import { LogBox } from 'react-native';
+
+
 
 function AddCardModal({ navigation, route }) {
   const { modalText, buttons, alerts } = landAppLogic();
@@ -28,20 +30,28 @@ function AddCardModal({ navigation, route }) {
   const isEditing = route.params?.isEditing;
   const isPlaying = route.params?.isPlaying;
   const isAdding = route.params?.isAdding;
+  const isAddingFromTranslator = route.params?.isAddingFromTranslator;
+  const confirmAlert = route.params?.confirmAlert;
+
+  LogBox.ignoreLogs([
+    'Non-serializable values were found in the navigation state',
+  ]);
 
   // Setting Modal name:
 
   const translationLabel = () => {
-    if (isEditing) {
+    if (isEditing || isAddingFromTranslator) {
       return savedtranslation;
-    } else if (isPlaying) {
+    } else if (isPlaying || isAdding) {
       return "";
     } else {
       return "";
     }
   };
 
-  const [word, setWord] = useState(isEditing || isPlaying ? savedWord : "");
+  const [word, setWord] = useState(
+    isEditing || isPlaying || isAddingFromTranslator ? savedWord : ""
+  );
   const [translation, setTranslation] = useState(translationLabel());
   const [isCorrect, setIsCorrect] = useState("default");
 
@@ -71,10 +81,6 @@ function AddCardModal({ navigation, route }) {
     dispatch(changeCurrentAction(`adding card ${word}-${translation}`));
   }
 
-
-
-
-
   //Validation part:
 
   const [inputsValidation, setInputsValidation] = useState({
@@ -103,7 +109,14 @@ function AddCardModal({ navigation, route }) {
   };
 
   function onCancel() {
-    navigation.navigate("CardGame");
+    isAddingFromTranslator
+      ? (Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success),
+        setTimeout(() => (route.params.onGoBack(true), navigation.goBack()), 500))
+      : navigation.goBack();
+  }
+
+  function goBack(){
+    navigation.goBack()
   }
 
   const validateInputs = () => {
@@ -174,7 +187,7 @@ function AddCardModal({ navigation, route }) {
         changeCardStatus(savedId, "wrong");
         dispatch(changeCurrentAction(`${savedId} is wrong`));
       }
-    } else if (isAdding && word && translation) {
+    } else if ((isAdding || isAddingFromTranslator) && word && translation) {
       const checkIfExists = cards.findIndex(
         (element) =>
           (element.translation === upperCaseTranslation ||
@@ -186,7 +199,7 @@ function AddCardModal({ navigation, route }) {
       } else {
         addNewCard();
 
-        setWord(""), setTranslation("");
+        !isAddingFromTranslator ? (setWord(""), setTranslation("")) : null;
 
         onCancel();
       }
@@ -237,32 +250,31 @@ function AddCardModal({ navigation, route }) {
               paddingRight: 10,
             }}
           >
-            
-              <View style={{height: "65%", width: "15%", justifyContent: "center", alignItems: "center"}}>
+            <View
+              style={{
+                height: "65%",
+                width: "15%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               {isPlaying && isCorrect === "correct" && (
-              <Animated.View
-                entering={ZoomIn.springify().duration(400)}
-              >
-                <FontAwesome
-                  name="check-circle"
-                  borderColor="black"
-                  size={50}
-                  color="green"
-                />
-              </Animated.View>
+                <Animated.View entering={ZoomIn.springify().duration(400)}>
+                  <FontAwesome
+                    name="check-circle"
+                    borderColor="black"
+                    size={50}
+                    color="green"
+                  />
+                </Animated.View>
               )}
-              </View>
-            
+            </View>
+
             {isPlaying && isCorrect === "wrong" && translation && (
               <View>
-              <Animated.View
-              entering={ZoomIn.springify().duration(400)}>
-              <MaterialIcons
-                name="cancel"
-                size={50}
-                color="#ff3800"
-              />
-              </Animated.View>
+                <Animated.View entering={ZoomIn.springify().duration(400)}>
+                  <MaterialIcons name="cancel" size={50} color="#ff3800" />
+                </Animated.View>
               </View>
             )}
           </View>
@@ -298,11 +310,14 @@ function AddCardModal({ navigation, route }) {
                 isCorrect === "correct" && { color: "green" },
               ]}
             >
-              {(isCorrect === "wrong" || isCorrect === "default") &&
-              !isAdding &&
-              !isEditing
-                ? "???"
-                : savedtranslation || translation}
+              {
+                (isCorrect === "wrong" || isCorrect === "default") &&
+                !isAdding &&
+                !isEditing &&
+                !isAddingFromTranslator
+                  ? "???"
+                  : translation /* || savedTranslation*/
+              }
             </Text>
           </View>
           <TextInput
@@ -321,7 +336,7 @@ function AddCardModal({ navigation, route }) {
               setWordInputTrue();
               setWord(text);
             }}
-            value={isEditing && word}
+            value={isEditing || (isAddingFromTranslator && word)}
             maxLength={30}
             textAlignVertical="top"
           />
@@ -346,7 +361,7 @@ function AddCardModal({ navigation, route }) {
               setTranslationInputTrue();
               setTranslation(wordTranslation);
             }}
-            value={isEditing && translation}
+            value={isEditing || (isAddingFromTranslator && translation)}
             maxLength={30}
             textAlignVertical="top"
           />
@@ -362,7 +377,7 @@ function AddCardModal({ navigation, route }) {
                 title={buttons.cancelButton}
                 color="black"
                 disabled={isCorrect === "correct" ? true : false}
-                onPress={onCancel}
+                onPress={isAddingFromTranslator ? goBack : onCancel}
               ></Button>
 
               <Button

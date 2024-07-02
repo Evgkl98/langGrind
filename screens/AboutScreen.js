@@ -70,7 +70,7 @@ export default function AboutScreen({ navigation }) {
                 flexDirection: "row",
                 justifyContent: "center",
                 alignItems: "center",
-                marginBottom: 50,
+                marginBottom: 40,
               })}
               onPress={() => WebBrowser.openBrowserAsync("https://www.linkedin.com/in/evgkl/")}
             >
@@ -132,12 +132,13 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 10,
+    paddingTop: 0,
   },
   cubic: {
-    height: 80,
-    width: 80,
+    height: 60,
+    width: 60,
     backgroundColor: "#0000FF",
     borderRadius: 8,
+    marginBottom: 10
   },
 });

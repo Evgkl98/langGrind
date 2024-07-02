@@ -1,64 +1,34 @@
 
-// Feedback mailing is provided by EmailJS
-// To use this code, create file publicData and add your own cridentials from EmailJS account:
-
-// import { send, EmailJSResponseStatus } from "@emailjs/react-native";
-// import { public_data } from "../publicData";
-
-// export const onSubmit = async (message, email) => {
-//   try {
-//     await send(
-//       public_data.service_id,
-//       public_data.template_id,
-//       {
-//         to_name: public_data.to_name,
-//         to_email: public_data.to_email,
-//         from_name: public_data.from_name,
-//         from_email: email,
-//         message,
-//       },
-//       {
-//         publicKey: public_data.public_key,
-//       }
-//     );
-
-//     console.log("SUCCESS!");
-//   } catch (err) {
-//     if (err instanceof EmailJSResponseStatus) {
-//       console.log("EmailJS Request Failed...", err);
-//     }
-//     console.log("ERROR", err);
-//   }
-// };
 
 // --- Feedback mailing is provided by EmailJS ---
-// --- To use this code, create file publicData and add your own cridentials from EmailJS account ---
+// --- To use this code, create file publicData and add your own credentials from EmailJS account ---
 
-// import { send, EmailJSResponseStatus } from "@emailjs/react-native";
+import { send, EmailJSResponseStatus } from "@emailjs/react-native";
 // import { public_data } from "../publicData";
+import { SERVICE_ID, TEMPLATE_ID, TO_NAME, TO_EMAIL, FROM_NAME, PUBLIC_KEY} from "@env";
 
-// export const onSubmit = async (message, email) => {
-//   try {
-//     await send(
-//       public_data.service_id,
-//       public_data.template_id,
-//       {
-//         to_name: public_data.to_name,
-//         to_email: public_data.to_email,
-//         from_name: public_data.from_name,
-//         from_email: email,
-//         message,
-//       },
-//       {
-//         publicKey: public_data.public_key,
-//       }
-//     );
+export const onSubmit = async (message, email) => {
+  try {
+    await send(
+      SERVICE_ID,
+      TEMPLATE_ID,
+      {
+        to_name: TO_NAME,
+        to_email: TO_EMAIL,
+        from_name: FROM_NAME,
+        from_email: email,
+        message,
+      },
+      {
+        publicKey: PUBLIC_KEY,
+      }
+    );
 
-//     console.log("SUCCESS!");
-//   } catch (err) {
-//     if (err instanceof EmailJSResponseStatus) {
-//       console.log("EmailJS Request Failed...", err);
-//     }
-//     console.log("ERROR", err);
-//   }
-// };
+    console.log("SUCCESS!");
+  } catch (err) {
+    if (err instanceof EmailJSResponseStatus) {
+      console.log("EmailJS Request Failed...", err);
+    }
+    console.log("ERROR", err);
+  }
+};

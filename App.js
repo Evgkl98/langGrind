@@ -20,6 +20,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "./store/store";
 // import AuthScreen from "./screens/AuthScreen";
 import TranslatorScreen from "./screens/TranslatorScreen";
+import WordMeaningScreen from "./screens/WordMeaningScreen";
 
 
 SplashScreen.preventAutoHideAsync();
@@ -87,6 +88,11 @@ export default function App() {
                 options={{ gestureEnabled: false, animation: "default" }}
               />
               <Stack.Screen
+                name="WordMeaningScreen"
+                component={WordMeaningScreen}
+                options={{ gestureEnabled: false, animation: "default" }}
+              />
+              <Stack.Screen
                 name="CardGameStart"
                 component={CardGameStart}
                 options={{ gestureEnabled: false, animation: "default", presentation: Platform.OS === "android" ? "modal" : null }}
@@ -94,7 +100,7 @@ export default function App() {
               <Stack.Screen
                 name="CardGame"
                 component={CardGame}
-                options={{ gestureEnabled: false, animation: "fade" }}
+                options={{ gestureEnabled: false, animation: "default" }}
               />
               <Stack.Screen
                 name="AddCardModal"

@@ -43,7 +43,7 @@ export default function SettingsScreen({ navigation }) {
             <View style={styles.settingsBox}>
               <Text
                 style={{
-                  fontFamily: "Inter-Light",
+                  fontFamily: "Inter-Regular",
                   fontSize: 23,
                   color: "black",
                   paddingHorizontal: 20,
@@ -76,7 +76,7 @@ export default function SettingsScreen({ navigation }) {
 
               <Text
                 style={{
-                  fontFamily: "Inter-Light",
+                  fontFamily: "Inter-Regular",
                   fontSize: 23,
                   color: "black",
                   paddingHorizontal: 20,

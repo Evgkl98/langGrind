@@ -1,4 +1,4 @@
-import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
+import { Platform, SafeAreaView, StyleSheet, View, Text } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import CustomHeader from "../components/CustomHeader";
 import AddButton from "../components/AddButton";
@@ -13,23 +13,20 @@ import landAppLogic from "../data/langAppLogic";
 import { useEffect, useState } from "react";
 import { fetchCards, deleteCard } from "../data/database";
 
-
 function CardGame({ navigation }) {
   const { gameText } = landAppLogic();
-
   const [cards, setCards] = useState([]);
-
   const currentStatus = useSelector((state) => state.cardReducer);
 
   function goBack() {
-    navigation.navigate("CardGameStart");
+    navigation.navigate("ChooseSection");
   }
   function addCard() {
     navigation.navigate("AddCardModal", { isAdding: true });
   }
   const dispatch = useDispatch();
 
-  // Fetching data from database:
+  console.log(cards.length);
 
   useEffect(() => {
     async function loadCards() {
@@ -39,6 +36,7 @@ function CardGame({ navigation }) {
     loadCards();
   }, [currentStatus]);
 
+  // currentStatus
   return (
     <>
       <SafeAreaView style={styles.safeArea}>
@@ -48,14 +46,9 @@ function CardGame({ navigation }) {
             onAddCard={addCard}
             twoButtons={cards.length !== 0}
           />
-          <View
-            style={[
-              styles.playground,
-              cards.length !== 0 && { paddingBottom: 0 },
-            ]}
-          >
+          <View style={[styles.playground, cards.length !== 0 && styles.borders]}>
             {cards.length === 0 ? (
-              <Animated.Text
+              <Text
                 style={{
                   fontFamily: "Inter-Light",
                   fontSize: 30,
@@ -64,41 +57,41 @@ function CardGame({ navigation }) {
                 }}
               >
                 {gameText.noCards}
-              </Animated.Text>
+              </Text>
             ) : (
-              <>
-                <Animated.FlatList
-                  itemLayoutAnimation={Platform.OS === "ios" ? LinearTransition.springify() : null}
-                  exiting={SlideOutLeft.duration(300)
-                    .easing(Easing.ease)
-                    .springify()
-                    .mass(0.4)}
-                  data={cards}
-                  keyExtractor={(item) => item.id}
-                  style={styles.flatListClass}
-                  showsVerticalScrollIndicator={false}
-                  renderItem={(itemData) => {
-                    return (
-                      <Card
-                        cardId={itemData.item.id}
-                        cardTranslation={itemData.item.translation}
-                        cardWord={itemData.item.word}
-                        cardStatus={itemData.item.cardStatus}
-                        onDelete={() => {
-                          deleteCard(itemData.item.id);
-                          dispatch(
-                            changeCurrentAction(
-                              `deleting item: ${itemData.item.id}`
-                            )
-                          );
-                        }}
-                      >
-                        {itemData.item.word}
-                      </Card>
-                    );
-                  }}
-                ></Animated.FlatList>
-              </>
+              <Animated.FlatList
+                itemLayoutAnimation={
+                  Platform.OS === "ios" ? LinearTransition.springify() : null
+                }
+                exiting={SlideOutLeft.duration(300)
+                  .easing(Easing.ease)
+                  .springify()
+                  .mass(0.4)}
+                data={cards}
+                keyExtractor={(item) => item.id}
+                style={styles.flatListClass}
+                showsVerticalScrollIndicator={false}
+                renderItem={(itemData) => {
+                  return (
+                    <Card
+                      cardId={itemData.item.id}
+                      cardTranslation={itemData.item.translation}
+                      cardWord={itemData.item.word}
+                      cardStatus={itemData.item.cardStatus}
+                      onDelete={() => {
+                        deleteCard(itemData.item.id);
+                        dispatch(
+                          changeCurrentAction(
+                            `deleting item: ${itemData.item.id}`
+                          )
+                        );
+                      }}
+                    >
+                      {itemData.item.word}
+                    </Card>
+                  );
+                }}
+              ></Animated.FlatList>
             )}
             {cards.length === 0 && <AddButton onPress={addCard}></AddButton>}
           </View>
@@ -120,10 +113,15 @@ const styles = StyleSheet.create({
     paddingBottom: "30%",
   },
   flatListClass: {
+    // borderTopWidth: 1,
+    // borderBottomWidth: 1,
+    width: "100%",
+  },
+  borders: {
+    paddingBottom: 0,
     borderTopWidth: 1,
     borderBottomWidth: 1,
     marginBottom: 20,
-    width: "100%"
   },
 });
 

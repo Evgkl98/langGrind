@@ -36,6 +36,9 @@ yarn-error.*
 
 # other
 publicData.js
+*.env
 eslint.config.mjs
 eas.json
 README.md
+TranslatorScreen_exp.js
+AuthScreen.js

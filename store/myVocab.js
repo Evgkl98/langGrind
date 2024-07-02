@@ -7,7 +7,7 @@ const vocabSlice =  createSlice({
     changeCurrentAction: (state, action) => {
       return action.payload
     } 
-  },
+  }
 });
 
 export default vocabSlice.reducer;

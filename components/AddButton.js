@@ -1,6 +1,7 @@
-import { Text, Pressable, StyleSheet, View } from "react-native";
+import { Text, Pressable, StyleSheet, View, PressableProps } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import landAppLogic from "../data/langAppLogic";
+
 
 export default function AddButton({ onPress, withoutBorder }) {
   const {buttons} = landAppLogic()

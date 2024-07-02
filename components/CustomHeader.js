@@ -27,9 +27,8 @@ function CustomHeader({
         <View style={[styles.headerBox, { width: windowWidth }]}>
           <Text
             style={{
-              fontSize: 20,
+              fontSize: 22,
               fontFamily: "Inter-Regular",
-              textDecorationLine: "underline",
             }}
           >
             {headerTitle}
