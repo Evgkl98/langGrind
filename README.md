@@ -76,5 +76,5 @@ To launch project locally you need:
  
 ## Addition
   
-The project is still under development. The set of features will be expanded.
+At the moment the project is migration to newer versions.
 
