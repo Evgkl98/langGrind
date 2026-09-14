@@ -2,7 +2,7 @@
 
  **React Native simple App for memorizing new foreign words** 
 
- <span>Note: App undergoes global refactoring and reimagine process. For original codebase check legacy-main branch</span>
+ <span>Note: Aug. 2026. App undergoes global refactoring and reimagine process in a separate repo</span>
  
 ## Built with
 - 🚩 ***General***: React Native, Expo, Redux-toolkit (incl. Redux Persist)
