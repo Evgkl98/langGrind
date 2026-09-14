@@ -1,6 +1,8 @@
 # LangGrind
 
  **React Native simple App for memorizing new foreign words** 
+
+ <span>Note: App undergoes global refactoring and reimagine process. For original codebase check legacy-main branch</span>
  
 ## Built with
 - 🚩 ***General***: React Native, Expo, Redux-toolkit (incl. Redux Persist)
@@ -39,8 +41,8 @@ To launch project locally you need:
 
   - 🖼 The user interface design as the name of the App are unique, but partly inspired by [Langenscheidt Dictionary](https://en.langenscheidt.com/)
     
-    <img src="https://github.com/Evgkl98/langGrind/blob/legacy-main/demo/MenuDemo.jpg" width="315" height="550">
-    <img src = "https://github.com/Evgkl98/langGrind/blob/legacy-main/demo/demo.gif" width="315" height="550">
+    <img src="https://github.com/Evgkl98/langGrind/blob/main/demo/MenuDemo.jpg" width="315" height="550">
+    <img src = "https://github.com/Evgkl98/langGrind/blob/main/demo/demo.gif" width="315" height="550">
     
 ## Features
 
@@ -55,8 +57,8 @@ To launch project locally you need:
   - Supports several languages for translating
   - Returns meaning of the word, part of speech and audio pronunciation
   <br>
-      <img src = "https://github.com/Evgkl98/langGrind/blob/legacy-main/demo/TranslatorDemo.gif" width="315" height="550">
-      <img src = "https://github.com/Evgkl98/langGrind/blob/legacy-main/demo/SettingsScreen.jpg" width="315" height="550">
+      <img src = "https://github.com/Evgkl98/langGrind/blob/main/demo/TranslatorDemo.gif" width="315" height="550">
+      <img src = "https://github.com/Evgkl98/langGrind/blob/main/demo/SettingsScreen.jpg" width="315" height="550">
  
 - User Friendly Validation:
 
